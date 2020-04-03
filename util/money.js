@@ -26,9 +26,15 @@ function calculateTotal(money) {
   return res;
 }
 
+function cardCount(money) {
+  return Object.values(money).reduce((a, b) => a + b, 0);
+}
+
 module.exports = {
   addAmount: addAmount,
   subtractAmount: subtractAmount,
   addMoney: addMoney,
   subtractMoney: subtractMoney,
+  calculateTotal: calculateTotal,
+  cardCount: cardCount,
 };

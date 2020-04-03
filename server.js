@@ -72,27 +72,32 @@ io.on('connection', function (socket) {
   });
 
   socket.on('startKoehandel', function (data) {
-    this.state.mode = 'koehandel';
+    state.mode = 'koehandel';
     handelObject = new KoeHandel(
       socket.id,
       data.challengedId,
       data.offer,
       data.rat,
     );
+    money.subtractMoney(state.players[socket.id].money, data.offer);
+    io.sockets.emit(
+      'message',
+      state.players[socket.id].name +
+        'heeft ' +
+        money.cardCount(data.offer) +
+        'kaarten op tafel gelegd.',
+    );
   });
 
   socket.on('abortHandel', function () {
-    this.state.mode = 'geen';
+    state.mode = 'geen';
     handelObject = null;
   });
 
-  socket.on('submitKoehandel', function (data) {
-    const result = handelObject.submit(socket.id, data);
-    if (result) {
-      io.sockets.emit('message', result);
-      this.state.mode = 'geen';
-      this.handelObject = null;
-    }
+  socket.on('acceptKoehandel', function (data) {
+    addMoney(state.players[socket.id].money, handelObject.offer);
+    handelObject = null;
+    state.mode = 'geen';
   });
 });
 
