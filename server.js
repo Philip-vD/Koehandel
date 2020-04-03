@@ -3,7 +3,7 @@ var express = require('express');
 var http = require('http');
 var path = require('path');
 var socketIO = require('socket.io');
-var money = retuire('./util/money.js');
+var money = require('./util/money.js');
 var Player = require('./Player.js');
 var KoeHandel = require('./KoeHandel.js');
 
