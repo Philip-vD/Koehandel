@@ -61,19 +61,24 @@ io.on('connection', function (socket) {
       io.sockets.emit('message', 'Het max aantal ezels is al bereikt.');
     } else {
       for (const player in state.players)
-        addAmount(player.money, ezelToMoney[state.ezelCount]);
+        money.addAmount(player.money, ezelToMoney[state.ezelCount]);
       state.ezelCount++;
     }
   });
 
   socket.on('giveMoney', function (data) {
-    subtractMoney(state.players[socket.id].money, data.money);
-    addMoney(state.palyers[data.recipient].money, data.money);
+    money.subtractMoney(state.players[socket.id].money, data.money);
+    money.addMoney(state.palyers[data.recipient].money, data.money);
   });
 
   socket.on('startKoehandel', function (data) {
     this.state.mode = 'koehandel';
-    handelObject = new KoeHandel(socket.id, data.challengedId);
+    handelObject = new KoeHandel(
+      socket.id,
+      data.challengedId,
+      data.offer,
+      data.rat,
+    );
   });
 
   socket.on('abortHandel', function () {
