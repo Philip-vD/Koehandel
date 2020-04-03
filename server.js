@@ -68,17 +68,17 @@ io.on('connection', function(socket) {
   socket.on('giveMoney', function(data) {
     state.players[socket.id].subtractMoney(data.money);
     state.palyers[data.recipient].addMoney(data.money);
-  })
+  });
 
   socket.on('startKoehandel', function(data) {
     this.state.mode = 'koehandel';
     handelObject = new KoeHandel(socket.id, data.challengedId);
-  })
+  });
 
   socket.on('abortHandel', function() {
     this.state.mode = 'geen';
     handelObject = null;
-  })
+  });
 
   socket.on('submitKoehandel', function(data) {
     const result = handelObject.submit(socket.id, data);
@@ -87,6 +87,11 @@ io.on('connection', function(socket) {
       this.state.mode = 'geen';
       this.handelObject= null;
     }
+  });
+
+  socket.on('disconnect', function(){
+    console.log("Player " + socket.id + " has disconnected.");
+    console.log(state.players)
   })
 });
 
