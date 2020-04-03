@@ -1,9 +1,9 @@
 function addAmount(target, amount, times = 1) {
-  target[amount] = target[amount] + times;
+  target[amount] += times;
 }
 
 function subtractAmount(target, amount, times = 1) {
-  target[amount] = target[amount] - times;
+  target[amount] -= times;
 }
 
 function addMoney(target, money) {
@@ -16,6 +16,14 @@ function subtractMoney(target, money) {
   for (const [amount, times] of Object.entries(money)) {
     subtractAmount(target, amount, times);
   }
+}
+
+function calculateTotal(money) {
+  var res = 0;
+  for (const [amount, times] of Object.entries(money)) {
+    res += times * amount;
+  }
+  return res;
 }
 
 module.exports = {
