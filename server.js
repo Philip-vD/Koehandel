@@ -15,11 +15,11 @@ app.set('port', 5000);
 app.use(express.static(path.join(__dirname + '/static')));
 
 //Routing
-app.get('/', function(request, response) {
+app.get('/', function (request, response) {
   response.sendFile(path.join(__dirname, 'index.html'));
 });
 
-server.listen(5000, function() {
+server.listen(5000, function () {
   console.log('Starting server on port 5000');
 });
 
@@ -27,6 +27,7 @@ var state = {
   gameStarted: false,
   modus: 'geen', //koehandel, stamboekhandel, rathandel
   ezelCount: 0,
+  ratCount: 0,
   players: {},
 };
 
@@ -51,6 +52,7 @@ io.on('connection', function (socket) {
     state.players[socket.id] = new Player(
       Object.keys(state.players).length === 0,
     );
+    io.sockets.emit('message', 'Er heeft zich een nieuwe speler aangemeld!');
   });
 
   socket.on('nameChange', function (data) {
@@ -105,9 +107,9 @@ io.on('connection', function (socket) {
     state.mode = 'geen';
   });
 
-  socket.on('disconnect', function(){
-    console.log("Player " + socket.id + " has disconnected.");
-  })
+  socket.on('disconnect', function () {
+    console.log('Player ' + socket.id + ' has disconnected.');
+  });
 });
 
 setInterval(function () {
