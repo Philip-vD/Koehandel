@@ -3,6 +3,14 @@ var socket = io();
 socket.emit('new player');
 
 var localState = {};
+var stateProxy = new Proxy(localState, {
+  set: function (target, key, value) {
+      console.log(`${key} set to ${value}`);
+      target[key] = value;
+      return true;
+  }
+});
+
 // Log the messages from the server
 socket.on('message', function (data) {
   console.log(data);
