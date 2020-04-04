@@ -11,6 +11,18 @@ var app = express();
 var server = http.Server(app);
 var io = socketIO(server);
 
+app.set('port', 5000);
+app.use(express.static(path.join(__dirname + '/static')));
+
+//Routing
+app.get('/', function(request, response) {
+  response.sendFile(path.join(__dirname, 'index.html'));
+});
+
+server.listen(5000, function() {
+  console.log('Starting server on port 5000');
+});
+
 var state = {
   gameStarted: false,
   modus: 'geen', //koehandel, stamboekhandel, rathandel
@@ -28,16 +40,9 @@ var ezelToMoney = {
   3: 500,
 };
 
-app.set('port', 5000);
-app.use('/static', express.static(__dirname + '/static'));
-
 //Routing
 app.get('/', function (request, response) {
   response.sendFile(path.join(__dirname, 'index.html'));
-});
-
-server.listen(5000, function () {
-  console.log('Starting server on port 5000');
 });
 
 // Add the WebSocket handlers
@@ -99,6 +104,10 @@ io.on('connection', function (socket) {
     handelObject = null;
     state.mode = 'geen';
   });
+
+  socket.on('disconnect', function(){
+    console.log("Player " + socket.id + " has disconnected.");
+  })
 });
 
 setInterval(function () {
