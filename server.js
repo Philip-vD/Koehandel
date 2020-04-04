@@ -91,7 +91,6 @@ io.on('connection', function(socket) {
 
   socket.on('disconnect', function(){
     console.log("Player " + socket.id + " has disconnected.");
-    console.log(state.players)
   })
 });
 
