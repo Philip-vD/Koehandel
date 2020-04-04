@@ -10,8 +10,6 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.17.1",
-    "flow": "^0.2.3",
-    "flow-bin": "^0.122.0",
     "socket.io": "^2.3.0"
   },
   "devDependencies": {
