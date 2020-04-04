@@ -6,6 +6,11 @@ function resizeGame(){
   let newWidth = window.innerWidth;
   let newHeight = window.innerHeight;
   let newWidthToHeight = newWidth/newHeight;
+  let actieKnop = document.getElementsByClassName("actieKnop");
+  for(var knop of actieKnop)
+  {
+    knop.style.borderRadius = "45%/15%";
+  }
 
   if (newWidthToHeight > widthToHeight) {
     // window width is too wide relative to desired game width
