@@ -3,6 +3,7 @@ var express = require('express');
 var http = require('http');
 var path = require('path');
 var socketIO = require('socket.io');
+var money = require('./util/money.js');
 var Player = require('./Player.js');
 var KoeHandel = require('./KoeHandel.js');
 
@@ -14,11 +15,11 @@ app.set('port', 5000);
 app.use(express.static(path.join(__dirname + '/static')));
 
 //Routing
-app.get('/', function(request, response) {
+app.get('/', function (request, response) {
   response.sendFile(path.join(__dirname, 'index.html'));
 });
 
-server.listen(5000, function() {
+server.listen(5000, function () {
   console.log('Starting server on port 5000');
 });
 
@@ -26,6 +27,7 @@ var state = {
   gameStarted: false,
   modus: 'geen', //koehandel, stamboekhandel, rathandel
   ezelCount: 0,
+  ratCount: 0,
   players: {},
 };
 
@@ -40,65 +42,76 @@ var ezelToMoney = {
 };
 
 //Routing
-app.get('/', function(request, response) {
+app.get('/', function (request, response) {
   response.sendFile(path.join(__dirname, 'index.html'));
 });
 
 // Add the WebSocket handlers
-io.on('connection', function(socket) {
-  socket.on('new player', function() {
-    state.players[socket.id] =
-      new Player(Object.keys(state.players).length === 0);
+io.on('connection', function (socket) {
+  socket.on('new player', function () {
+    state.players[socket.id] = new Player(
+      Object.keys(state.players).length === 0,
+    );
+    io.sockets.emit('message', 'Er heeft zich een nieuwe speler aangemeld!');
   });
 
-  socket.on('nameChange', function(data) {
+  socket.on('nameChange', function (data) {
     state.players[socket.id].name = data;
   });
 
-  socket.on('startGame', function() {
+  socket.on('startGame', function () {
     state.gameStarted = true;
   });
 
-  socket.on('ezel', function() {
+  socket.on('ezel', function () {
     if (state.ezelCount === 4) {
       io.sockets.emit('message', 'Het max aantal ezels is al bereikt.');
-    }
-    else {
+    } else {
       for (const player in state.players)
-        player.addAmount(ezelToMoney[state.ezelCount]);
-      state.ezelCount ++;
+        money.addAmount(player.money, ezelToMoney[state.ezelCount]);
+      state.ezelCount++;
     }
   });
 
-  socket.on('giveMoney', function(data) {
-    state.players[socket.id].subtractMoney(data.money);
-    state.palyers[data.recipient].addMoney(data.money);
+  socket.on('giveMoney', function (data) {
+    money.subtractMoney(state.players[socket.id].money, data.money);
+    money.addMoney(state.palyers[data.recipient].money, data.money);
   });
 
-  socket.on('startKoehandel', function(data) {
-    this.state.mode = 'koehandel';
-    handelObject = new KoeHandel(socket.id, data.challengedId);
+  socket.on('startKoehandel', function (data) {
+    state.mode = 'koehandel';
+    handelObject = new KoeHandel(
+      socket.id,
+      data.challengedId,
+      data.offer,
+      data.rat,
+    );
+    money.subtractMoney(state.players[socket.id].money, data.offer);
+    io.sockets.emit(
+      'message',
+      state.players[socket.id].name +
+        'heeft ' +
+        money.cardCount(data.offer) +
+        'kaarten op tafel gelegd.',
+    );
   });
 
-  socket.on('abortHandel', function() {
-    this.state.mode = 'geen';
+  socket.on('abortHandel', function () {
+    state.mode = 'geen';
     handelObject = null;
   });
 
-  socket.on('submitKoehandel', function(data) {
-    const result = handelObject.submit(socket.id, data);
-    if (result) {
-      io.sockets.emit('message', result);
-      this.state.mode = 'geen';
-      this.handelObject= null;
-    }
+  socket.on('acceptKoehandel', function (data) {
+    addMoney(state.players[socket.id].money, handelObject.offer);
+    handelObject = null;
+    state.mode = 'geen';
   });
 
-  socket.on('disconnect', function(){
-    console.log("Player " + socket.id + " has disconnected.");
-  })
+  socket.on('disconnect', function () {
+    console.log('Player ' + socket.id + ' has disconnected.');
+  });
 });
 
-setInterval(function() {
+setInterval(function () {
   io.sockets.emit('state', state);
 }, 1000 / 60);
