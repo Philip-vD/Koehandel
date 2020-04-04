@@ -1,17 +1,47 @@
-<html>
+<!DOCTYPE html>
+<html lang="en"> 
   <head>
     <title>Koehandel</title>
-    <style>
-      canvas {
-        width: 800px;
-        height: 600px;
-        border: 5px solid black;
-      }
-    </style>
+    <meta charset="utf-8">
+    <meta name="author" content="Philip van Duijn & Bo Flachs">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/style.css">
     <script src="/socket.io/socket.io.js"></script>
   </head>
   <body>
-    <canvas id="canvas"></canvas>
+    <div id="gameArea">
+      <canvas id="gameCanvas">
+
+      </canvas>
+      <div id="ezelTeller">
+        <p>Ezelteller</p>
+      </div>
+      <div id="spelModus">
+        <p>Spelmodus</p>
+      </div>
+      <div id="rattenTeller">
+        <p>Rattenteller</p>
+      </div>
+      <div id="andereSpelers">
+        <p>Andere Spelers</p>
+      </div>
+      <div id="actueleSpelInformatie">
+        <p>Actuele Spelinformatie</p>
+      </div>
+      <div id="betaalScherm">
+        <p>Betaal Scherm</p>
+      </div>
+      <div id="statsPanel">
+        <p>Naam & Geld</p>
+      </div>
+      <div id="geldVoorraad">
+        <p>Geldvoorraad</p>
+      </div>
+      <div id="actieMenu">
+        <p>Acties</p>
+      </div>
+    </div>
   </body>
-  <script src="/static/game.js"></script>
+  <script src="/game.js"></script>
+  <script src="/interaction.js"></script>
 </html>
