@@ -21,6 +21,12 @@ let aantalRatten = document.getElementById('rattenTeller').getElementsByTagName(
 // Initialize spelmodus 
 let spelModus = document.getElementById("spelModus").getElementsByTagName('p')[0];
 
+// Initalize naam submit and add eventlistener
+let naamSubmit = document.getElementById('naamSubmit');
+naamSubmit.addEventListener('click', veranderNaam, false);
+let naamInput = naamSubmit.previousSibling.previousSibling;
+
+
 // Log the messages from the server
 socket.on('message', function (data) {
   console.log(data);
@@ -36,6 +42,12 @@ function dismissMessage() {
   var infoBox = document.getElementById('actueleSpelInformatie');
   infoBox.style.backgroundColor = 'transparent';
   infoBox.innerHTML = null;
+}
+
+// Verander naam 
+function veranderNaam(e){
+  e.preventDefault();
+  socket.emit('nameChange', naamInput.value);
 }
 
 // Update ezel teller en rattenteller

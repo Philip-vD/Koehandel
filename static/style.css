@@ -17,6 +17,7 @@ ul {
 }
 
 button {
+  outline: none;
   cursor: pointer;
   border: 3px solid rgb(128, 67, 27);
   background: url(https://image.shutterstock.com/image-photo/brown-scratched-wooden-cutting-board-260nw-582026461.jpg);
@@ -180,6 +181,31 @@ button:hover{
   left: 45%;
 }
 
+#changeNamePanel{
+  position: absolute;
+left: 15%;
+width:80%;
+height: 45%;
+top: 30%;
+text-align: center;
+z-index: 1;
+display: none;
+background-color: rgb(187, 128, 0);
+}
+
+#changeNamePanel input{
+  font-size: 0.5em;
+  outline: none;
+}
+
+#changeNamePanel button{
+  font-size: 0.5em;
+}
+
+#veranderNaam {
+  outline: none;
+}
+
 #statsPanel {
   position: absolute;
   left: 0;
@@ -198,6 +224,13 @@ button:hover{
 
 #totaalGeld {
   font-size: 0.9em;
+}
+
+#veranderNaam {
+  font-size: 0.3em;
+  position: absolute;
+  bottom: 5%;
+  left: 10%;
 }
 
 #geldVoorraad {

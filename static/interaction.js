@@ -2,6 +2,8 @@
 let actieKnoppen = {};
 let betaalKnoppen = {};
 let betaalScherm;
+let veranderNaamScherm;
+let veranderNaamKnop;
 
 // Functie om het betaalmenu te openen
 function openBetaalMenu(){
@@ -11,6 +13,14 @@ function openBetaalMenu(){
 // Functie om het betaalmenu te sluiten
 function sluitBetaalMenu(){
   betaalScherm.style.display = "none";
+}
+
+// Toon naam verander menu
+function openNaamMenu(){
+  veranderNaamScherm.style.display = "block";
+}
+function sluitNaamMenu(){
+  veranderNaamScherm.style.display = "none";
 }
 
 // Create a function that resizes the game to the correct ratio
@@ -61,6 +71,10 @@ function initializeVariables(){
   betaalKnoppen.betaal = document.getElementById('betaalButton');
   betaalScherm = document.getElementById("betaalScherm");
 
+  // Initialize naam verandering scherm
+  veranderNaamScherm = document.getElementById("changeNamePanel");
+  veranderNaamKnop = document.getElementById("veranderNaam");
+  naamSubmit = document.getElementById('naamSubmit');
 }
 
 // Add eventlisteners to variables
@@ -68,6 +82,10 @@ function registerEvents(){
   // Open of sluit betaalmenu
   actieKnoppen.Betaling.addEventListener('click', openBetaalMenu, false);
   betaalKnoppen.annuleer.addEventListener('click', sluitBetaalMenu, false);
+
+  // Verander naam
+  veranderNaamKnop.addEventListener('click', openNaamMenu, false);
+  naamSubmit.addEventListener('click', sluitNaamMenu,false);
 }
 
 
