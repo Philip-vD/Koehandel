@@ -1,7 +1,6 @@
 var socket = io();
 
 socket.emit('new player');
-window.alert("Check");
 
 var localState = {};
 var stateProxy = new Proxy(localState, {
