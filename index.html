@@ -16,7 +16,7 @@
       <div id="ezelTeller">
         <p>Ezels: #</p>
       </div>
-      <div id="spelModus">
+      <div class="paneel" id="spelModus">
         <p>{Spelmodus}</p>
       </div>
       <div id="rattenTeller">
@@ -32,45 +32,60 @@
       <div id="actueleSpelInformatie" onclick="dismissMessage()">
         <p>Actuele Spelinformatie</p>
       </div>
-      <div id="betaalScherm">
+      <div class="paneel" id="betaalScherm">
         <p id="betaalInfo">Je gaat # betalen aan ?</p>
         <table>
           <tr>
-            <td>
+            <td colspan="3">
               <img class="geld" src="/Images/0geld.jpeg" alt="Nul geld kaart">
             </td>
-            <td>
+            <td colspan="3">
               <img class="geld" src="/Images/10geld.jpg" alt="10 geld kaart">
             </td>
-            <td>
+            <td colspan="3"> 
               <img class="geld" src="/Images/20geld.jpg" alt="20 geld kaart">
             </td>
-            <td>
+            <td colspan="3">
               <img class="geld" src="/Images/50geld.jpg" alt="50 geld kaart">
             </td>
-            <td>
+            <td colspan="3">
               <img class="geld" src="/Images/100geld.jpg" alt="100 geld kaart">
             </td>
-            <td>
+            <td colspan="3">
               <img class="geld" src="/Images/200geld.jpg" alt="20 geld kaart">
             </td>
-            <td>
+            <td colspan="3">
               <img class="geld" src="/Images/500geld.jpg" alt="500 geld kaart">
             </td>
           </tr>
           <tr>
+            <td><button class="min1Button">-1</button></td>
             <td>0</td>
+            <td><button class="plus1Button">+1</button></td>
+            <td><button class="min1Button">-1</button></td>
             <td>0</td>
+            <td><button class="plus1Button">+1</button></td>
+            <td><button class="min1Button">-1</button></td>
             <td>0</td>
+            <td><button class="plus1Button">+1</button></td>
+            <td><button class="min1Button">-1</button></td>
             <td>0</td>
+            <td><button class="plus1Button">+1</button></td>
+            <td><button class="min1Button">-1</button></td>
             <td>0</td>
+            <td><button class="plus1Button">+1</button></td>
+            <td><button class="min1Button">-1</button></td>
             <td>0</td>
+            <td><button class="plus1Button">+1</button></td>
+            <td><button class="min1Button">-1</button></td>
             <td>0</td>
+            <td><button class="plus1Button">+1</button></td>
           </tr>
         </table>
+        <button id="annuleerBetaling">Annuleer</button>
         <button id="betaalButton">Betaal</button>
       </div>
-      <div id="statsPanel">
+      <div class=" paneel" id="statsPanel">
         <ul>
           <li class="naam">Bo</li>
           <li id="totaalGeld">Totaal: geld</li>
@@ -112,7 +127,7 @@
           </tr>
         </table>
       </div>
-      <div id="actieMenu">
+      <div class="paneel" id="actieMenu">
         <p>Acties</p>
         <button class="actieKnop">Koehandel</button>
         <button class="actieKnop">Stamboek</button>
