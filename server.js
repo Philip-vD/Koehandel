@@ -1,4 +1,3 @@
-//@flow
 //Dependencies
 var express = require('express');
 var http = require('http');
@@ -47,13 +46,18 @@ app.get('/', function (request, response) {
   response.sendFile(path.join(__dirname, 'index.html'));
 });
 
+function emitStateUpdate(values) {
+  values.forEach(key => io.sockets.emit('update' + key.charAt(0).toUpperCase() + key.slice(1), state))
+}
+
 // Add the WebSocket handlers
 io.on('connection', function (socket) {
-  socket.on('new player', function () {
+  socket.on('new player', function (name) {
     state.players[socket.id] = new Player(
       Object.keys(state.players).length === 0,
+      name
     );
-    io.sockets.emit('message', 'Er heeft zich een nieuwe speler aangemeld!');
+    io.sockets.emit('message', name + ' heeft zich aangemeld!');
   });
 
   socket.on('nameChange', function (data) {
@@ -112,7 +116,3 @@ io.on('connection', function (socket) {
     console.log('Player ' + socket.id + ' has disconnected.');
   });
 });
-
-setInterval(function () {
-  io.sockets.emit('state', state);
-}, 1000 / 60);

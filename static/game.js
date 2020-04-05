@@ -1,15 +1,10 @@
 var socket = io();
 
-socket.emit('new player');
+var name = prompt("Please enter your name");
+
+socket.emit('new player', name);
 
 var localState = {};
-var stateProxy = new Proxy(localState, {
-  set: function (target, key, value) {
-      console.log(`${key} set to ${value}`);
-      target[key] = value;
-      return true;
-  }
-});
 
 // Log the messages from the server
 socket.on('message', function (data) {
