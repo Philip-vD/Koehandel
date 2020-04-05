@@ -11,7 +11,6 @@ socket.on('message', function (data) {
 
 function displayMessage(message) {
   var infoBox = document.getElementById('actueleSpelInformatie');
-  infoBox.style.backgroundColor = 'white';
   infoBox.innerHTML = message;
 }
 

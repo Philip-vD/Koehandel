@@ -12,23 +12,25 @@ function resizeGame(){
     knop.style.borderRadius = "45%/15%";
   }
 
-  if (newWidthToHeight > widthToHeight) {
-    // window width is too wide relative to desired game width
-    newWidth = newHeight * widthToHeight;
-    gameArea.style.height = newHeight + 'px';
-    gameArea.style.width = newWidth + 'px';
-  } else { // window height is too high relative to desired game height
-    newHeight = newWidth / widthToHeight;
-    gameArea.style.width = newWidth + 'px';
-    gameArea.style.height = newHeight + 'px';
+  if(newWidth > gameArea.offsetWidth & newHeight > gameArea.offsetHeight){
+    if (newWidthToHeight > widthToHeight) {
+      // window width is too wide relative to desired game width
+      newWidth = newHeight * widthToHeight;
+      gameArea.style.height = newHeight + 'px';
+      gameArea.style.width = newWidth + 'px';
+    } else { // window height is too high relative to desired game height
+      newHeight = newWidth / widthToHeight;
+      gameArea.style.width = newWidth + 'px';
+      gameArea.style.height = newHeight + 'px';
+    }
+  
+    // Center the canvas 
+    gameArea.style.marginTop = (-newHeight / 2) + 'px';
+    gameArea.style.marginLeft = (-newWidth / 2) + 'px';
+  
+    // Adjust fontsize
+    gameArea.style.fontSize = (newWidth / 400) + 'em';
   }
-
-  // Center the canvas 
-  gameArea.style.marginTop = (-newHeight / 2) + 'px';
-  gameArea.style.marginLeft = (-newWidth / 2) + 'px';
-
-  // Adjust fontsize
-  gameArea.style.fontSize = (newWidth / 400) + 'em';
 }
 
 // Add eventlisteners for the resizing of the game
