@@ -54,8 +54,10 @@ button {
   width: 30%;
   height: 10%;
   top: 0;
-  background-color: aqua;
   border-radius: 20%;
+  background-color: rgba(187, 128, 0, 0.719);
+  box-sizing: border-box;
+  border: 8px groove rgb(129, 73, 9);
 }
 
 #spelModus p,
@@ -82,8 +84,7 @@ button {
   left: 5%;
   width: 90%;
   height: 15%;
-  top: 12%;
-  background-color: aqua;
+  top: 13%;
   text-align: center;
 }
 
@@ -113,12 +114,33 @@ button {
   position: absolute;
   left: 15%;
   width: 70%;
-  height: 35%;
+  height: 45%;
   top: 30%;
   background-color: rgb(85, 85, 85);
   text-align: center;
   z-index: 1;
-  display: none;
+  display: block;
+}
+
+#betaalScherm table{
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+#betaalInfo {
+  position: relative;
+  top: 5%;
+}
+
+#betaalButton{
+  position: absolute;
+  left: 50%;
+  top: 85%;
+  transform: translate(-50%, -50%);
+  border:none;
+  background: url(https://image.shutterstock.com/image-photo/brown-scratched-wooden-cutting-board-260nw-582026461.jpg);
 }
 
 #statsPanel {
@@ -127,7 +149,10 @@ button {
   width: 25%;
   height: 30%;
   bottom: 0;
-  background-color: aqua;
+  border-top-right-radius: 20%;
+  background-color: rgba(187, 128, 0, 0.719);
+  box-sizing: border-box;
+  border: 8px groove rgb(129, 73, 9);
 }
 
 #statsPanel li{
@@ -137,14 +162,36 @@ button {
   margin-bottom: 5%;
 }
 
+#totaalGeld {
+  font-size: 0.9em;
+}
+
 #geldVoorraad {
   position: absolute;
   left: 25%;
   width: 50%;
   height: 30%;
   bottom: 0;
-  background-color: blue;
   text-align: center;
+}
+
+#geldVoorraad table{
+  position: absolute;
+  left: 50%;
+  top: 45%;
+  transform: translate(-50%, -50%);
+  table-layout: fixed;
+  width: 95%;
+}
+
+#geldVoorraad td{
+  width: 100/7%;
+  text-align: center;
+}
+
+#geldVoorraad img{
+  width: 60px;
+  height: auto;
 }
 
 #actieMenu {
@@ -153,9 +200,11 @@ button {
   width: 25%;
   height: 45%;
   bottom: 0;
-  background-color: aqua;
   text-align: center;
   border-top-left-radius: 20%;
+  background-color: rgba(187, 128, 0, 0.719);
+  box-sizing: border-box;
+  border: 8px groove rgb(129, 73, 9);
 }
 
 #actieMenu p{
@@ -171,6 +220,8 @@ button {
   margin: auto;
   margin-top: 1vmin;
   margin-bottom: 2vmin;
+  border:none;
+  background: url(https://image.shutterstock.com/image-photo/brown-scratched-wooden-cutting-board-260nw-582026461.jpg);
 }
 
 .actieKnop:hover {
