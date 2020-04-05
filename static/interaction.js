@@ -1,3 +1,17 @@
+// Declare variables
+let actieKnoppen = {};
+let betaalKnoppen = {};
+let betaalScherm
+
+// Functie om het betaalmenu te openen
+function openBetaalMenu(){
+  betaalScherm.style.display = "block";
+}
+
+// Functie om het betaalmenu te sluiten
+function sluitBetaalMenu(){
+  betaalScherm.style.display = "none";
+}
 
 // Create a function that resizes the game to the correct ratio
 function resizeGame(){
@@ -33,7 +47,32 @@ function resizeGame(){
   }
 }
 
+// Initialize variables
+function initializeVariables(){
+  // Initialize actie knoppen
+  let knoppenActie = document.getElementsByClassName("actieKnop");
+  actieKnoppen.Koehandel = knoppenActie[0];
+  actieKnoppen.Stamboek = knoppenActie[1];
+  actieKnoppen.Rathandel = knoppenActie[2];
+  actieKnoppen.Betaling = knoppenActie[3];
+
+  // Initialize annuleer/betaal knop en betaalscherm
+  betaalKnoppen.annuleer = document.getElementById('annuleerBetaling');
+  betaalKnoppen.betaal = document.getElementById('betaalButton');
+  betaalScherm = document.getElementById("betaalScherm");
+}
+
+// Add eventlisteners to variables
+function registerEvents(){
+  // Open of sluit betaalmenu
+  actieKnoppen.Betaling.addEventListener('click', openBetaalMenu, false);
+  betaalKnoppen.annuleer.addEventListener('click', sluitBetaalMenu, false);
+}
+
+
 // Add eventlisteners for the resizing of the game
 window.addEventListener('load', resizeGame, false);
 window.addEventListener('resize', resizeGame, false);
 window.addEventListener('orientationchange', resizeGame, false);
+window.addEventListener('load', initializeVariables,false);
+window.addEventListener('load', registerEvents, false);
