@@ -60,6 +60,7 @@ function initializeVariables(){
   betaalKnoppen.annuleer = document.getElementById('annuleerBetaling');
   betaalKnoppen.betaal = document.getElementById('betaalButton');
   betaalScherm = document.getElementById("betaalScherm");
+
 }
 
 // Add eventlisteners to variables

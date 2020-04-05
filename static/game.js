@@ -1,6 +1,7 @@
 var socket = io();
 
 socket.emit('new player');
+window.alert("Check");
 
 var localState = {};
 var stateProxy = new Proxy(localState, {
@@ -39,8 +40,12 @@ function dismissMessage() {
 }
 
 // Update ezel teller en rattenteller
-socket.on('state', function(data){
-  aantalEzels.innerText = "Ezels: " + data.ezelCount;
-  aantalRatten.innerText = "Ratten: " + data.ratCount;
-  spelModus.innerText = data.modus;
-})
+socket.on('updateEzel', function(data){
+  aantalEzels.innerText = "Ezels: " + data;
+});
+socket.on('updateRat', function(data){
+  aantalRatten.innerText = "Ratten: " + data;
+});
+socket.on('updateModus', function(data){
+  spelModus.innerText = data;
+});
