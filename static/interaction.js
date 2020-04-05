@@ -1,7 +1,7 @@
 // Declare variables
 let actieKnoppen = {};
 let betaalKnoppen = {};
-let betaalScherm
+let betaalScherm;
 
 // Functie om het betaalmenu te openen
 function openBetaalMenu(){

@@ -11,6 +11,16 @@ var stateProxy = new Proxy(localState, {
   }
 });
 
+//
+// Declare and initialize DOM variables
+//
+// Initalize ezel en rattentellers
+let aantalEzels = document.getElementById('ezelTeller').getElementsByTagName('p')[0];
+let aantalRatten = document.getElementById('rattenTeller').getElementsByTagName('p')[0];
+
+// Initialize spelmodus 
+let spelModus = document.getElementById("spelModus").getElementsByTagName('p')[0];
+
 // Log the messages from the server
 socket.on('message', function (data) {
   console.log(data);
@@ -27,3 +37,10 @@ function dismissMessage() {
   infoBox.style.backgroundColor = 'transparent';
   infoBox.innerHTML = null;
 }
+
+// Update ezel teller en rattenteller
+socket.on('state', function(data){
+  aantalEzels.innerText = "Ezels: " + data.ezelCount;
+  aantalRatten.innerText = "Ratten: " + data.ratCount;
+  spelModus.innerText = data.modus;
+})
