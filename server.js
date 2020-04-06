@@ -59,14 +59,18 @@ io.on('connection', function (socket) {
       name
     );
     io.sockets.emit('message', name + ' heeft zich aangemeld!');
+    emitStateUpdate(['players']);
   });
 
+  //data = string
   socket.on('nameChange', function (data) {
     state.players[socket.id].name = data;
+    emitStateUpdate(['players']); 
   });
 
   socket.on('startGame', function () {
     state.gameStarted = true;
+    emitStateUpdate(['gameStarted']);
   });
 
   socket.on('ezel', function () {
@@ -77,21 +81,34 @@ io.on('connection', function (socket) {
         money.addAmount(player.money, ezelToMoney[state.ezelCount]);
       state.ezelCount++;
     }
+    emitStateUpdate(['ezelCount', 'players']);
   });
 
+  socket.on('rat', function () {
+    if (state.ezelCount === 4) {
+      io.sockets.emit('message', 'Het max aantal ratten is al bereikt.');
+    } else {
+      state.ratCount++;
+    }
+    emitStateUpdate(['ratCount', 'players']);
+  });
+
+  //data = {money: geldobject}
   socket.on('giveMoney', function (data) {
     money.subtractMoney(state.players[socket.id].money, data.money);
     money.addMoney(state.palyers[data.recipient].money, data.money);
+    emitStateUpdate('players');
   });
 
+  //data = { challengedId: string, offer: geldobject, rat: boolean }
   socket.on('startKoehandel', function (data) {
     state.mode = 'koehandel';
     handelObject = new KoeHandel(
       socket.id,
-      data.challengedId,
       data.offer,
       data.rat,
     );
+    io.to(`${challengedId}`).emit('challenged');
     money.subtractMoney(state.players[socket.id].money, data.offer);
     io.sockets.emit(
       'message',
@@ -100,18 +117,42 @@ io.on('connection', function (socket) {
         money.cardCount(data.offer) +
         'kaarten op tafel gelegd.',
     );
+    emitStateUpdate(['players', 'mode']);
   });
 
-  socket.on('abortHandel', function () {
-    state.mode = 'geen';
+  socket.on('acceptKoehandel', function () {
+    money.addMoney(state.players[socket.id].money, handelObject.offer);
     handelObject = null;
+    state.mode = 'geen';
+    emitStateUpdate(['players', 'mode']);
   });
 
-  socket.on('acceptKoehandel', function (data) {
-    addMoney(state.players[socket.id].money, handelObject.offer);
-    handelObject = null;
-    state.mode = 'geen';
+  //data = {offer: geldobject}
+  socket.on('counterKoehandel', function (data) {
+    var offer = money.calculateTotal(handelObject.offer);
+    var counterOffer = money.calculateTotal(data.offer);
+    if(offer === counterOffer) {
+      io.sockets.emit('message', 'Gelijkspel! Voer koehandel nog éénmaal uit.');
+      state.mode = 'geen';
+      handelObject = null;
+      money.addMoney(state.players[handelObject.challengerId], handelObject.offer);
+      emitStateUpdate(['mode', 'players']);
+    }
+    else {
+      var winner = (offer > counterOffer) !== handelObject.rat ?
+        handelObject.challengerId :
+        socket.id;
+      io.sockets.emit('message', state.players[winner].name + 'heeft gewonnen!');
+      money.subtractMoney(state.players[socket.id].money, counterOffer);
+      money.addMoney(state.players[handelObject.challengerId].money, counterOffer);
+      money.addMoney(state.players[socket.id].money, handelObject.offer);
+      state.mode = 'geen';
+      handelObject = null;
+      emitStateUpdate(['mode', 'players']);
+    }
   });
+
+  //socket.on('startStamboekHandel')
 
   socket.on('disconnect', function () {
     console.log('Player ' + socket.id + ' has disconnected.');
