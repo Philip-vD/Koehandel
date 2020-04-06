@@ -31,8 +31,8 @@ var state = {
   players: {},
 };
 
-
 var handelObject;
+var ratMoney;
 
 //const
 var ezelToMoney = {
@@ -155,15 +155,37 @@ io.on('connection', function (socket) {
   socket.on('startStamboekHandel', function() {
     state.mode = 'stamboekhandel';
     emitStateUpdate(['mode']);
-  })
+  });
 
   socket.on('acceptStamboekHandel', function() {
     if (state.mode !== 'geen') {
       state.mode = 'geen';
-      io.sockets.emit('message', state.players[socket.id].name + 'heeft hem geaccepteerd. Voer de transactie middels de betalingknop uit.');
+      io.sockets.emit('message', state.players[socket.id].name + ' heeft hem geaccepteerd. Voer de transactie middels de betalingknop uit.');
       emitStateUpdate(['mode']);
     }
-  })
+  });
+
+  socket.on('startRatHandel', function() {
+    state.mode = 'rathandel';
+    ratMoney = {};
+    io.sockets.emit('message', 'Rathandel is gestart. Er zitten momenteel 0 kaarten in de ratpot.');
+    emitStateUpdate(['mode']);
+  });
+
+  //data = geldobject
+  socket.on('submitRatHandel', function(data) {
+    money.subtractMoney(state.players[socket.id].money, data);
+    money.addMoney(ratMoney, data);
+    io.sockets.emit('message', 'Er zitten momenteel ' + money.cardCount(ratMoney) + ' in de ratpot.');
+    emitStateUpdate(['players']);
+  });
+
+  socket.on('acceptRatHandel', function() {
+    io.sockets.emit('message', state.players[socket.id].name + ' claimt het geld en krijgt de rat!!');
+    money.addMoney(state.players[socket.id].money, ratMoney);
+    state.mode = 'geen';
+    emitStateUpdate(['players', 'mode']);
+  });
 
   socket.on('disconnect', function () {
     console.log('Player ' + socket.id + ' has disconnected.');
