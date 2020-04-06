@@ -33,6 +33,7 @@ var state = {
 
 var handelObject;
 var ratMoney;
+var gelijkSpellen = 0;
 
 //const
 var ezelToMoney = {
@@ -127,12 +128,19 @@ io.on('connection', function (socket) {
     emitStateUpdate(['players', 'mode']);
   });
 
-  //data = {offer: geldobject}
+  //data = geldobject
   socket.on('counterKoehandel', function (data) {
     var offer = money.calculateTotal(handelObject.offer);
-    var counterOffer = money.calculateTotal(data.offer);
+    var counterOffer = money.calculateTotal(data);
     if(offer === counterOffer) {
-      io.sockets.emit('message', 'Gelijkspel! Voer koehandel nog éénmaal uit.');
+      if (gelijkSpellen) {
+        io.sockets.emit('message', 'Gelijkspel! Voer koehandel nog éénmaal uit.');
+        gelijkSpellen++;
+      }
+      else {
+        io.sockets.emit('message', 'Alweer gelijkspel! De beurt wordt doorgegeven');
+        gelijkSpellen = 0;
+      }
       state.mode = 'geen';
       handelObject = null;
       money.addMoney(state.players[handelObject.challengerId], handelObject.offer);
@@ -143,8 +151,8 @@ io.on('connection', function (socket) {
         handelObject.challengerId :
         socket.id;
       io.sockets.emit('message', state.players[winner].name + 'heeft gewonnen!');
-      money.subtractMoney(state.players[socket.id].money, counterOffer);
-      money.addMoney(state.players[handelObject.challengerId].money, counterOffer);
+      money.subtractMoney(state.players[socket.id].money, data);
+      money.addMoney(state.players[handelObject.challengerId].money, data);
       money.addMoney(state.players[socket.id].money, handelObject.offer);
       state.mode = 'geen';
       handelObject = null;
