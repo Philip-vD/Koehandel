@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="/style.css">
     <script src="/socket.io/socket.io.js"></script>
+    <script src="/interaction.js"></script>
   </head>
   <body>
     <div id="gameArea">
@@ -14,13 +15,13 @@
 
       </canvas>
       <div id="ezelTeller">
-        <p>Ezels: #</p>
+        <p>Ezels: 0</p>
       </div>
-      <div id="spelModus">
+      <div class="paneel" id="spelModus">
         <p>{Spelmodus}</p>
       </div>
       <div id="rattenTeller">
-        <p>Ratten: #</p>
+        <p>Ratten: 0</p>
       </div>
       <div id="andereSpelers">
         <ul>
@@ -32,73 +33,97 @@
       <div id="actueleSpelInformatie" onclick="dismissMessage()">
         <p>Actuele Spelinformatie</p>
       </div>
-      <div id="betaalScherm">
+      <div class="paneel" id="betaalScherm">
         <p id="betaalInfo">Je gaat # betalen aan ?</p>
         <table>
           <tr>
-            <td>
+            <td colspan="3">
               <img class="geld" src="/Images/0geld.jpeg" alt="Nul geld kaart">
             </td>
-            <td>
+            <td colspan="3">
               <img class="geld" src="/Images/10geld.jpg" alt="10 geld kaart">
             </td>
-            <td>
+            <td colspan="3"> 
               <img class="geld" src="/Images/20geld.jpg" alt="20 geld kaart">
             </td>
-            <td>
+            <td colspan="3">
               <img class="geld" src="/Images/50geld.jpg" alt="50 geld kaart">
             </td>
-            <td>
+            <td colspan="3">
               <img class="geld" src="/Images/100geld.jpg" alt="100 geld kaart">
             </td>
-            <td>
+            <td colspan="3">
               <img class="geld" src="/Images/200geld.jpg" alt="20 geld kaart">
             </td>
-            <td>
+            <td colspan="3">
               <img class="geld" src="/Images/500geld.jpg" alt="500 geld kaart">
             </td>
           </tr>
           <tr>
+            <td><button class="min1Button">-1</button></td>
             <td>0</td>
+            <td><button class="plus1Button">+1</button></td>
+            <td><button class="min1Button">-1</button></td>
             <td>0</td>
+            <td><button class="plus1Button">+1</button></td>
+            <td><button class="min1Button">-1</button></td>
             <td>0</td>
+            <td><button class="plus1Button">+1</button></td>
+            <td><button class="min1Button">-1</button></td>
             <td>0</td>
+            <td><button class="plus1Button">+1</button></td>
+            <td><button class="min1Button">-1</button></td>
             <td>0</td>
+            <td><button class="plus1Button">+1</button></td>
+            <td><button class="min1Button">-1</button></td>
             <td>0</td>
+            <td><button class="plus1Button">+1</button></td>
+            <td><button class="min1Button">-1</button></td>
             <td>0</td>
+            <td><button class="plus1Button">+1</button></td>
           </tr>
         </table>
+        <button id="annuleerBetaling">Annuleer</button>
         <button id="betaalButton">Betaal</button>
       </div>
-      <div id="statsPanel">
+      <div class="paneel" id="changeNamePanel">
+        <form action="">
+          <h1>Verander je naam</h1>
+          <label for="naam">Naam: </label>
+          <input name="naam" type="text" placeholder="Naam" required>
+          <button id="naamSubmit">Submit</button>
+        </form>
+      </div>
+      <div class="paneel" id="statsPanel">
         <ul>
           <li class="naam">Bo</li>
           <li id="totaalGeld">Totaal: geld</li>
+          <button id="veranderNaam">Verander Naam</button>
         </ul>
       </div>
       <div id="geldVoorraad">
         <table>
           <tr>
             <td>
-              <img class="geld" src="/Images/0geld.jpeg" alt="Nul geld kaart">
+              <img src="/Images/0geld.jpeg" alt="Nul geld kaart">
             </td>
             <td>
-              <img class="geld" src="/Images/10geld.jpg" alt="10 geld kaart">
+              <img src="/Images/10geld.jpg" alt="10 geld kaart">
             </td>
             <td>
-              <img class="geld" src="/Images/20geld.jpg" alt="20 geld kaart">
+              <img src="/Images/20geld.jpg" alt="20 geld kaart">
             </td>
             <td>
-              <img class="geld" src="/Images/50geld.jpg" alt="50 geld kaart">
+              <img src="/Images/50geld.jpg" alt="50 geld kaart">
             </td>
             <td>
-              <img class="geld" src="/Images/100geld.jpg" alt="100 geld kaart">
+              <img src="/Images/100geld.jpg" alt="100 geld kaart">
             </td>
             <td>
-              <img class="geld" src="/Images/200geld.jpg" alt="20 geld kaart">
+              <img src="/Images/200geld.jpg" alt="20 geld kaart">
             </td>
             <td>
-              <img class="geld" src="/Images/500geld.jpg" alt="500 geld kaart">
+              <img src="/Images/500geld.jpg" alt="500 geld kaart">
             </td>
           </tr>
           <tr>
@@ -112,7 +137,7 @@
           </tr>
         </table>
       </div>
-      <div id="actieMenu">
+      <div class="paneel" id="actieMenu">
         <p>Acties</p>
         <button class="actieKnop">Koehandel</button>
         <button class="actieKnop">Stamboek</button>
@@ -122,5 +147,4 @@
     </div>
   </body>
   <script src="/game.js"></script>
-  <script src="/interaction.js"></script>
 </html>

@@ -17,7 +17,14 @@ ul {
 }
 
 button {
+  outline: none;
   cursor: pointer;
+  border: 3px solid rgb(128, 67, 27);
+  background: url(https://image.shutterstock.com/image-photo/brown-scratched-wooden-cutting-board-260nw-582026461.jpg);
+}
+
+button:hover{
+  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
 }
 
 .naam {
@@ -55,9 +62,6 @@ button {
   height: 10%;
   top: 0;
   border-radius: 20%;
-  background-color: rgba(187, 128, 0, 0.719);
-  box-sizing: border-box;
-  border: 8px groove rgb(129, 73, 9);
 }
 
 #spelModus p,
@@ -116,10 +120,10 @@ button {
   width: 70%;
   height: 45%;
   top: 30%;
-  background-color: rgb(85, 85, 85);
   text-align: center;
   z-index: 1;
-  display: none;
+  display: none;;
+  background-color: rgb(187, 128, 0);
 }
 
 #betaalScherm table{
@@ -137,16 +141,69 @@ button {
   top: 5%;
 }
 
+#annuleerBetaling{
+  position: absolute;
+  left: 20%;
+  top: 88%;
+  transform: translate(-50%, -50%);
+  border-radius: 30%;
+  font-size: 0.8em;
+  outline: none;
+  color: rgb(151, 0, 0);
+}
+
 #betaalButton{
   position: absolute;
   left: 50%;
-  top: 86%;
+  top: 88%;
   transform: translate(-50%, -50%);
   border-radius: 30%;
   font-size: 1em;
   outline: none;
-  border:none;
-  background: url(https://image.shutterstock.com/image-photo/brown-scratched-wooden-cutting-board-260nw-582026461.jpg);
+}
+
+.min1Button,
+.plus1Button{
+  background: none;
+  background-color: rgb(243, 199, 142);
+  border-radius: 30%;
+  position: relative;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  outline: none;
+}
+
+.min1Button{
+  left: 55%;
+}
+
+.plus1Button{
+  left: 45%;
+}
+
+#changeNamePanel{
+  position: absolute;
+left: 15%;
+width:80%;
+height: 45%;
+top: 30%;
+text-align: center;
+z-index: 1;
+display: none;
+background-color: rgb(187, 128, 0);
+}
+
+#changeNamePanel input{
+  font-size: 0.5em;
+  outline: none;
+}
+
+#changeNamePanel button{
+  font-size: 0.5em;
+}
+
+#veranderNaam {
+  outline: none;
 }
 
 #statsPanel {
@@ -156,9 +213,6 @@ button {
   height: 30%;
   bottom: 0;
   border-top-right-radius: 20%;
-  background-color: rgba(187, 128, 0, 0.719);
-  box-sizing: border-box;
-  border: 8px groove rgb(129, 73, 9);
 }
 
 #statsPanel li{
@@ -170,6 +224,13 @@ button {
 
 #totaalGeld {
   font-size: 0.9em;
+}
+
+#veranderNaam {
+  font-size: 0.3em;
+  position: absolute;
+  bottom: 5%;
+  left: 10%;
 }
 
 #geldVoorraad {
@@ -216,9 +277,6 @@ button {
   bottom: 0;
   text-align: center;
   border-top-left-radius: 20%;
-  background-color: rgba(187, 128, 0, 0.719);
-  box-sizing: border-box;
-  border: 8px groove rgb(129, 73, 9);
 }
 
 #actieMenu p{
@@ -234,10 +292,10 @@ button {
   margin: auto;
   margin-top: 1vmin;
   margin-bottom: 2vmin;
-  border:none;
-  background: url(https://image.shutterstock.com/image-photo/brown-scratched-wooden-cutting-board-260nw-582026461.jpg);
 }
 
-.actieKnop:hover {
-  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+.paneel{
+  background-color: rgba(187, 128, 0, 0.719);
+  box-sizing: border-box;
+  border: 8px groove rgb(129, 73, 9);
 }
