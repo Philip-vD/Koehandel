@@ -98,7 +98,7 @@ io.on('connection', function (socket) {
   socket.on('giveMoney', function (data) {
     money.subtractMoney(state.players[socket.id].money, data.money);
     money.addMoney(state.palyers[data.recipient].money, data.money);
-    emitStateUpdate('players');
+    emitStateUpdate(['players']);
   });
 
   //data = { challengedId: string, offer: geldobject, rat: boolean }

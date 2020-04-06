@@ -6,6 +6,8 @@ socket.emit('new player', name);
 
 var localState = {};
 
+//localState.players[socket.id].isLeader
+
 //
 // Declare and initialize DOM variables
 //
@@ -46,12 +48,12 @@ function veranderNaam(e){
 }
 
 // Update ezel teller en rattenteller
-socket.on('updateEzel', function(data){
-  aantalEzels.innerText = "Ezels: " + data;
+socket.on('updateEzel', function(state){
+  aantalEzels.innerText = "Ezels: " + localState.ezelCount;
 });
-socket.on('updateRat', function(data){
-  aantalRatten.innerText = "Ratten: " + data;
+socket.on('updateRat', function(state){
+  aantalRatten.innerText = "Ratten: " + localState.ezelCount;
 });
-socket.on('updateModus', function(data){
-  spelModus.innerText = data;
+socket.on('updateModus', function(state){
+  spelModus.innerText = localState.ratCount;
 });
