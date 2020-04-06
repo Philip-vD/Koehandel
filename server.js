@@ -152,7 +152,18 @@ io.on('connection', function (socket) {
     }
   });
 
-  //socket.on('startStamboekHandel')
+  socket.on('startStamboekHandel', function() {
+    state.mode = 'stamboekhandel';
+    emitStateUpdate(['mode']);
+  })
+
+  socket.on('acceptStamboekHandel', function() {
+    if (state.mode !== 'geen') {
+      state.mode = 'geen';
+      io.sockets.emit('message', state.players[socket.id].name + 'heeft hem geaccepteerd. Voer de transactie middels de betalingknop uit.');
+      emitStateUpdate(['mode']);
+    }
+  })
 
   socket.on('disconnect', function () {
     console.log('Player ' + socket.id + ' has disconnected.');
