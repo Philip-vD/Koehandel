@@ -114,7 +114,9 @@ button:hover{
   text-align: center;
 }
 
-#betaalScherm {
+#betaalScherm,
+#startKoehandelScherm
+ {
   position: absolute;
   left: 15%;
   width: 70%;
@@ -122,11 +124,12 @@ button:hover{
   top: 30%;
   text-align: center;
   z-index: 1;
-  display: none;;
+  display: none;
   background-color: rgb(187, 128, 0);
 }
 
-#betaalScherm table{
+#betaalScherm table,
+#startKoehandelScherm table{
   position: absolute;
   left: 50%;
   top: 50%;
@@ -136,12 +139,14 @@ button:hover{
   height: 60%;
 }
 
-#betaalInfo {
+#betaalInfo,
+#koeHandelInzet {
   position: relative;
   top: 5%;
 }
 
-#annuleerBetaling{
+#annuleerBetaling,
+#annuleerKoehandel{
   position: absolute;
   left: 20%;
   top: 88%;
@@ -160,6 +165,35 @@ button:hover{
   border-radius: 30%;
   font-size: 1em;
   outline: none;
+}
+
+#startKoehandelButton{
+  position: absolute;
+  left: 50%;
+  top: 88%;
+  transform: translate(-50%, -50%);
+  border-radius: 30%;
+  font-size: 0.8em;
+  outline: none;
+}
+
+#uitgedaagdeLabel{
+  position: absolute;
+  left: 78%;
+  top: 88%;
+  transform: translate(-50%, -50%);
+  font-size: 0.6em;
+}
+
+#uitgedaagde{
+  position: absolute;
+  left: 92%;
+  top: 88%;
+  transform: translate(-50%, -50%);
+  border-radius: 30%;
+  font-size: 0.3em;
+  outline: none;
+  background-color: rgb(243, 199, 142);
 }
 
 .min1Button,

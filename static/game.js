@@ -23,6 +23,9 @@ let naamSubmit = document.getElementById('naamSubmit');
 naamSubmit.addEventListener('click', veranderNaam, false);
 let naamInput = naamSubmit.previousSibling.previousSibling;
 
+// Initialize modus paneel
+let modusPaneel = document.getElementById("spelModus");
+
 
 // Log the messages from the server
 socket.on('message', function (data) {
@@ -49,11 +52,24 @@ function veranderNaam(e){
 
 // Update ezel teller en rattenteller
 socket.on('updateEzel', function(state){
+  localState.ezelCount = state.ezelCount;
   aantalEzels.innerText = "Ezels: " + localState.ezelCount;
 });
 socket.on('updateRat', function(state){
+  localState.ratCount = state.ratCount;
   aantalRatten.innerText = "Ratten: " + localState.ezelCount;
 });
+
+// Update modus 
 socket.on('updateModus', function(state){
-  spelModus.innerText = localState.ratCount;
+  localState.modus = state.modus;
+  if(localState.modus === 'geen'){
+    modusPaneel.style.display = "none";
+  } else{
+    modusPaneel.style.display = "block";
+    spelModus.innerText = localState.modus;
+  }
 });
+
+// Tel in secondes in console
+setInterval(function(){console.log("seconde")},1000);
