@@ -1,7 +1,7 @@
 class Player {
-  constructor(isLeader) {
+  constructor(isLeader, name) {
     this.isLeader = isLeader;
-    this.name = '';
+    this.name = name;
     this.money = {
       0: 3,
       10: 3,
