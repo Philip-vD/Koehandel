@@ -23,7 +23,6 @@ let naamSubmit = document.getElementById('naamSubmit');
 naamSubmit.addEventListener('click', veranderNaam, false);
 let naamInput = naamSubmit.previousSibling.previousSibling;
 
-
 // Log the messages from the server
 socket.on('message', function (data) {
   console.log(data);

@@ -48,17 +48,39 @@ app.get('/', function (request, response) {
   response.sendFile(path.join(__dirname, 'index.html'));
 });
 
+function getStateKeyUpdateName(key) {
+  return 'update' + key.charAt(0).toUpperCase() + key.slice(1);
+}
+
 function emitStateUpdate(values) {
-  values.forEach(key => io.sockets.emit('update' + key.charAt(0).toUpperCase() + key.slice(1), state))
+  values.forEach(key => io.sockets.emit(getStateKeyUpdateName(key), state))
+}
+
+function sendFullState(socket) {
+  Object.keys(state).foreach(key => {
+    socket.emit(getStateKeyUpdateName(key), state);
+  });
 }
 
 // Add the WebSocket handlers
 io.on('connection', function (socket) {
   socket.on('new player', function (name) {
+    var nameId = null;
+    for (let [key, value] of Object.entries(state.players)) {
+      if (value === name)
+        nameId = key;
+    }
+    if (nameId) {
+      state.players[socket.id] = state.players[nameId];
+      delete state.players[nameId];
+    }
+    else {
     state.players[socket.id] = new Player(
       Object.keys(state.players).length === 0,
       name
     );
+    }
+    sendFullState(socket);
     io.sockets.emit('message', name + ' heeft zich aangemeld!');
     emitStateUpdate(['players']);
   });
