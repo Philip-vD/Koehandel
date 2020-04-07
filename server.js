@@ -64,6 +64,7 @@ function sendFullState(socket) {
 
 // Add the WebSocket handlers
 io.on('connection', function (socket) {
+  //name = string
   socket.on('new player', function (name) {
     var nameId = null;
     for (let [key, value] of Object.entries(state.players)) {
@@ -75,19 +76,19 @@ io.on('connection', function (socket) {
       delete state.players[nameId];
     }
     else {
-    state.players[socket.id] = new Player(
-      Object.keys(state.players).length === 0,
-      name
-    );
+      state.players[socket.id] = new Player(
+        Object.keys(state.players).length === 0,
+        name
+      );
     }
     sendFullState(socket);
     io.sockets.emit('message', name + ' heeft zich aangemeld!');
     emitStateUpdate(['players']);
   });
 
-  //data = string
-  socket.on('nameChange', function (data) {
-    state.players[socket.id].name = data;
+  //name = string
+  socket.on('nameChange', function (name) {
+    state.players[socket.id].name = name;
     emitStateUpdate(['players']); 
   });
 
@@ -116,7 +117,7 @@ io.on('connection', function (socket) {
     emitStateUpdate(['ratCount', 'players']);
   });
 
-  //data = {money: geldobject}
+  //data = {money: geldobject, recipient: string (player id)}
   socket.on('giveMoney', function (data) {
     money.subtractMoney(state.players[socket.id].money, data.money);
     money.addMoney(state.palyers[data.recipient].money, data.money);
