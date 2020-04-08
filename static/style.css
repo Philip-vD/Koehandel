@@ -115,7 +115,8 @@ button:hover{
 }
 
 #betaalScherm,
-#startKoehandelScherm
+#startKoehandelScherm,
+#uitgedaagdeKoehandelScherm
  {
   position: absolute;
   left: 15%;
@@ -128,8 +129,13 @@ button:hover{
   background-color: rgb(187, 128, 0);
 }
 
+#uitgedaagdeKoehandelScherm{
+  display: block;
+}
+
 #betaalScherm table,
-#startKoehandelScherm table{
+#startKoehandelScherm table,
+#uitgedaagdeKoehandelScherm table{
   position: absolute;
   left: 50%;
   top: 50%;
@@ -157,6 +163,17 @@ button:hover{
   color: rgb(151, 0, 0);
 }
 
+#accepteerKoehandel{
+  position: absolute;
+  left: 80%;
+  top: 88%;
+  transform: translate(-50%, -50%);
+  border-radius: 30%;
+  font-size: 0.6em;
+  outline: none;
+  color: green;
+}
+
 #betaalButton{
   position: absolute;
   left: 50%;
@@ -167,7 +184,8 @@ button:hover{
   outline: none;
 }
 
-#startKoehandelButton{
+#startKoehandelButton,
+#tegenBodButton{
   position: absolute;
   left: 50%;
   top: 88%;
@@ -321,7 +339,7 @@ background-color: rgb(187, 128, 0);
   display: block;
   outline: none;
   width: 80%;
-  font-size: 0.7em;  
+  font-size: 0.68em;  
   padding: 0.9vmin;
   margin: auto;
   margin-top: 1vmin;

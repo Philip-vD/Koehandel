@@ -86,7 +86,7 @@ function initializeVariables(){
   veranderNaamKnop = document.getElementById("veranderNaam");
   naamSubmit = document.getElementById('naamSubmit');
 
-  // Initalize start koehandel scherm
+  // Initialize start koehandel scherm
   startKoehandel.annuleer = document.getElementById("annuleerKoehandel");
   startKoehandel.daagUit = document.getElementById("startKoehandelButton");
   startKoehandel.scherm = document.getElementById("startKoehandelScherm");
