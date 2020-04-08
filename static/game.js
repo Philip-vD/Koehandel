@@ -334,6 +334,12 @@ function renderOpponents(players) {
   opponentContainer.innerHTML = innerHTML;
 }
 
+function renderOwnMoney(money) {
+  for (let [key, value] of Object.entries(money)) {
+    document.getElementById('cardCount' + key).innerHTML = value;
+  }
+}
+
 // Update ezel teller en rattenteller
 socket.on('updateEzelCount', function(state){
   localState.ezelCount = state.ezelCount;
@@ -359,4 +365,5 @@ socket.on('updatePlayers', function(state) {
   localState.players = state.players;
   mijnNaam.innerHTML = localState.players[socket.id].name;
   renderOpponents(localState.players);
-})
+  renderOwnMoney(localState.players[socket.id].money);
+});
