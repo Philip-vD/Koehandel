@@ -313,6 +313,10 @@ function dismissMessage() {
   infoBox.innerHTML = null;
 }
 
+function claimStamboekDier() {
+  socket.emit('acceptStamboekHandel');
+}
+
 // Verander naam 
 function veranderNaam(e){
   e.preventDefault();
