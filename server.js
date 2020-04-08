@@ -101,8 +101,9 @@ io.on('connection', function (socket) {
     if (state.ezelCount === 4) {
       io.sockets.emit('message', 'Het max aantal ezels is al bereikt.');
     } else {
-      for (const player in state.players)
-        money.addAmount(player.money, ezelToMoney[state.ezelCount]);
+      for (const player in state.players){
+        money.addAmount(state.players[player].money, ezelToMoney[state.ezelCount]);
+      }
       state.ezelCount++;
     }
     emitStateUpdate(['ezelCount', 'players']);
