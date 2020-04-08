@@ -2,17 +2,27 @@
 let actieKnoppen = {};
 let betaalKnoppen = {};
 let betaalScherm;
+let startKoehandel = {};
 let veranderNaamScherm;
 let veranderNaamKnop;
 
-// Functie om het betaalmenu te openen
+// Functie om het betaalmenu te openen/sluiten
 function openBetaalMenu(){
   betaalScherm.style.display = "block";
 }
-
-// Functie om het betaalmenu te sluiten
 function sluitBetaalMenu(){
   betaalScherm.style.display = "none";
+}
+
+// Functies voor startKoehandelScherm
+function openStartKoehandelScherm(){
+  startKoehandel.scherm.style.display = "block";
+}
+function sluitStartKoehandelScherm(){
+  startKoehandel.scherm.style.display = "none";
+}
+function veranderUitgedaagde(){
+  startKoehandel.tekst.innerText = "Je gaat # inleggen en daagt " + startKoehandel.uitgedaagde.value + " uit.";
 }
 
 // Toon naam verander menu
@@ -75,6 +85,13 @@ function initializeVariables(){
   veranderNaamScherm = document.getElementById("changeNamePanel");
   veranderNaamKnop = document.getElementById("veranderNaam");
   naamSubmit = document.getElementById('naamSubmit');
+
+  // Initialize start koehandel scherm
+  startKoehandel.annuleer = document.getElementById("annuleerKoehandel");
+  startKoehandel.daagUit = document.getElementById("startKoehandelButton");
+  startKoehandel.scherm = document.getElementById("startKoehandelScherm");
+  startKoehandel.uitgedaagde = document.getElementById("uitgedaagde");
+  startKoehandel.tekst = document.getElementById("koeHandelInzet");
 }
 
 // Add eventlisteners to variables
@@ -86,6 +103,11 @@ function registerEvents(){
   // Verander naam
   veranderNaamKnop.addEventListener('click', openNaamMenu, false);
   naamSubmit.addEventListener('click', sluitNaamMenu,false);
+
+  // Open of sluit startKoehandelScherm
+  actieKnoppen.Koehandel.addEventListener('click', openStartKoehandelScherm, false);
+  startKoehandel.annuleer.addEventListener('click', sluitStartKoehandelScherm, false);
+  startKoehandel.uitgedaagde.addEventListener('change', veranderUitgedaagde, false);
 }
 
 
