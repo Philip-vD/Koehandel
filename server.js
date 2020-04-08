@@ -120,7 +120,7 @@ io.on('connection', function (socket) {
   //data = {money: geldobject, recipient: string (player id)}
   socket.on('giveMoney', function (data) {
     money.subtractMoney(state.players[socket.id].money, data.money);
-    money.addMoney(state.palyers[data.recipient].money, data.money);
+    money.addMoney(state.players[data.recipient].money, data.money);
     emitStateUpdate(['players']);
   });
 
