@@ -6,7 +6,7 @@ socket.emit('new player', name);
 
 var localState = {};
 
-var bedrag = {
+var virtueelBedrag = {
   0: 0,
   10: 0,
   20: 0,
@@ -156,11 +156,11 @@ function veranderNaam(e){
 }
 
 // Update ezel teller en rattenteller
-socket.on('updateEzel', function(state){
+socket.on('updateEzelCount', function(state){
   localState.ezelCount = state.ezelCount;
   aantalEzels.innerText = "Ezels: " + localState.ezelCount;
 });
-socket.on('updateRat', function(state){
+socket.on('updateRatCount', function(state){
   localState.ratCount = state.ratCount;
   aantalRatten.innerText = "Ratten: " + localState.ezelCount;
 });
