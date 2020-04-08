@@ -434,6 +434,7 @@ socket.on('updateMode', function(state){
     modusPaneel.style.display = "block";
     switch (mode){
       case 'koehandel':
+        spelModus.getElementsByTagName('p')[0].innerText = "Koehandel";
         disableButtons();
         break;
       case 'stamboekhandel':
