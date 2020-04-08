@@ -94,6 +94,11 @@ let rathandelScherm = document.getElementById('rathandelScherm');
 actieKnoppen2.Rathandel = knoppenActie[2];
 actieKnoppen2.Rathandel.addEventListener('click', startRathandel, false);
 
+// Initialize stamboekhandel
+let stamboekHandelScherm = document.getElementById('stamboekHandelScherm');
+actieKnoppen2.Stamboek = knoppenActie[1];
+actieKnoppen2.Stamboek.addEventListener('click', startStamboekHandel, false);
+
 // Initialize betaalmenu
 actieKnoppen2.Betaling = knoppenActie[3];
 actieKnoppen2.Betaling.addEventListener('click', updateGeldKnoppen, false);
@@ -117,6 +122,11 @@ function enableButtons(){
 // Start de rathandel
 function startRathandel(){
   socket.emit('startRatHandel');
+}
+
+// Start de stamboekhandel
+function startStamboekHandel(){
+  socket.emit('startStamboekHandel');
 }
 
 // Handle alle koehandel knoppen
@@ -417,6 +427,7 @@ socket.on('updateMode', function(state){
   localState.mode = mode;
   if(localState.mode === 'geen'){
     modusPaneel.style.display = "none";
+    stamboekHandelScherm.style.display = "none";
     rathandelScherm.display = "none";
     enableButtons();
   } else{
@@ -426,6 +437,8 @@ socket.on('updateMode', function(state){
         disableButtons();
         break;
       case 'stamboekhandel':
+        spelModus.getElementsByTagName('p')[0].innerText = "Stamboekhandel";
+        stamboekHandelScherm.style.display = "block";
         disableButtons();
         break;
       case 'rathandel':

@@ -29,7 +29,7 @@
         <p>Actuele Spelinformatie</p>
       </div>
       <div class="paneel" id="betaalScherm">
-        <p id="betaalInfo">Je gaat # betalen aan Joris</p>
+        <p id="betaalInfo">Je gaat # betalen aan ?</p>
         <table>
           <tr>
             <td colspan="3">
@@ -85,7 +85,7 @@
         </select>
       </div>
       <div class="paneel" id="startKoehandelScherm">
-        <p id="koeHandelInzet">Je gaat # inleggen en daagt Joris uit</p>
+        <p id="koeHandelInzet">Je gaat # inleggen en daagt ? uit</p>
         <table>
           <tr>
             <td colspan="3">
@@ -246,6 +246,10 @@
         <button id="legInRat">Leg kaart in</button>
         <button id="accepteerRathandel">Accepteer</button>
       </div>
+      <div class="paneel" id="stamboekHandelScherm">
+        <p>Druk op de knop wanneer het kaartenaantal genoemd wordt dat jij bereid bent te betalen</p>
+        <button id='claimStamboekDier' onclick="claimStamboekDier()">Claim 'm!</button>
+      </div>
       <div class="paneel" id="changeNamePanel">
         <form action="">
           <h1>Verander je naam</h1>
@@ -296,10 +300,6 @@
             <td id="cardCount500">0</td>
           </tr>
         </table>
-      </div>
-      <div class="paneel" id="stamboekHandelScherm">
-          <p>Druk op de knop wanneer het kaartenaantal genoemd wordt dat jij bereid bent te betalen</p>
-          <button id='claimStamboekDier' onclick="claimStamboekDier()">Claim 'm!</button>
       </div>
       <div class="paneel" id="actieMenu">
         <p>Acties</p>
