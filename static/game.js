@@ -18,6 +18,21 @@ let virtueelBod = {
 };
 //localState.players[socket.id].isLeader
 
+// Helper functies
+// Bereken aantal kaarten
+function cardCount(money) {
+  return Object.values(money).reduce((a, b) => a + b, 0);
+}
+
+// Bereken totaal geld hulpfunctie
+function calculateTotal(money) {
+  var res = 0;
+  for (const [amount, times] of Object.entries(money)) {
+    res += times * amount;
+  }
+  return res;
+}
+
 //
 // Declare and initialize DOM variables
 //
@@ -72,15 +87,6 @@ function accepteerKoehandel(){
 }
 function doeTegenBod(){
   uitgedaagdeKoehandelScherm.style.display = "none";
-}
-
-// Bereken totaal geld hulpfunctie
-function calculateTotal(money) {
-  var res = 0;
-  for (const [amount, times] of Object.entries(money)) {
-    res += times * amount;
-  }
-  return res;
 }
 
 // Disable alle geldknoppen
@@ -321,7 +327,7 @@ function renderOpponents(players) {
   var innerHTML = '';
   for (let [key, value] of Object.entries(players)) {
     if (!(key === socket.id)) {
-      innerHTML += generateOpponentHTML(value.name, 12);
+      innerHTML += generateOpponentHTML(value.name, cardCount(value.money));
     }
   }
   console.log(innerHTML);
