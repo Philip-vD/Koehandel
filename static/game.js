@@ -136,6 +136,16 @@ function handleStartKoehandel() {
   startKoehandelScherm.style.display = "none";
 }
 
+function handleSubmitRatHandel() {
+  socket.emit('submitRatHandel', { offer: virtueelBod });
+  resetVirtueelBod();
+}
+
+function handleAcceptRatHandel() {
+  socket.emit('acceptRatHandel');
+  resetVirtueelBod();
+}
+
 // Disable alle geldknoppen
 function updateGeldKnoppen(){
   for(let i = 0; i < plus1Knoppen.length; i++)
