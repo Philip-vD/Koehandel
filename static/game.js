@@ -16,6 +16,17 @@ let virtueelBod = {
   200: 0,
   500: 0,
 };
+function resetVirtueelBod() {
+  virtueelBod = {
+    0: 0,
+    10: 0,
+    20: 0,
+    50: 0,
+    100: 0,
+    200: 0,
+    500: 0,
+  };
+}
 //localState.players[socket.id].isLeader
 
 // Helper functies
@@ -89,6 +100,12 @@ function accepteerKoehandel(){
 }
 function doeTegenBod(){
   uitgedaagdeKoehandelScherm.style.display = "none";
+}
+
+function handleStartKoehandel() {
+  var id = betaaldeSelect.value;
+  socket.emit('startKoeHandel', { id, virtueelBod });
+  resetVirtueelBod()
 }
 
 // Disable alle geldknoppen
