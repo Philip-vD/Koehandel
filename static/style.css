@@ -132,10 +132,6 @@ button:hover{
   background-color: rgb(187, 128, 0);
 }
 
-#uitgedaagdeKoehandelScherm{
-  display: block;
-}
-
 #betaalScherm table,
 #startKoehandelScherm table,
 #uitgedaagdeKoehandelScherm table{
