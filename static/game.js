@@ -46,6 +46,8 @@ let aantalEzels = document.getElementById('ezelTeller').getElementsByTagName('p'
 let aantalRatten = document.getElementById('rattenTeller').getElementsByTagName('p')[0];
 let mijnNaam = document.getElementById('myName');
 let opponentContainer = document.getElementById('opponentContainer');
+let betaaldeSelect = document.getElementById('betaalde');
+let uitgedaagdeSelect = document.getElementById('uitgedaagde');
 
 // Initialize spelmodus 
 let spelModus = document.getElementById("spelModus").getElementsByTagName('p')[0];
@@ -326,6 +328,21 @@ function generateOpponentHTML(name, count) {
   return '<div class=\"opponentObject\"><p>' + name + '<br>' + count + ' krtn</p></div>';
 }
 
+function generateRecipientHTML(name, id) {
+  return '<option value=\"' + id + '\">' + name + '</option>';
+}
+
+function setSelectOptions(players) {
+  var innerHTML = '';
+  for (let [key, value] of Object.entries(players)) {
+    if (!(key === socket.id)) {
+      innerHTML += generateRecipientHTML(value.name, cardCount(value.money));
+    }
+  }
+  betaaldeSelect.innerHTML = innerHTML;
+  uitgedaagdeSelect.innerHTML = innerHTML;
+}
+
 function renderOpponents(players) {
   var innerHTML = '';
   for (let [key, value] of Object.entries(players)) {
@@ -368,4 +385,5 @@ socket.on('updatePlayers', function(state) {
   mijnNaam.innerHTML = localState.players[socket.id].name;
   renderOpponents(localState.players);
   renderOwnMoney(localState.players[socket.id].money);
+  setSelectOptions(localState.players);
 });
