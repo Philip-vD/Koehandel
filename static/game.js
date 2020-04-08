@@ -2,9 +2,9 @@ var socket = io();
 
 var name = prompt("Please enter your name");
 
-socket.emit('new player', name);
-
 var localState = {};
+
+socket.emit('new player', name);
 
 //localState.players[socket.id].isLeader
 
@@ -55,7 +55,12 @@ socket.on('updateRat', function(state){
   localState = state;
   aantalRatten.innerText = "Ratten: " + localState.ezelCount;
 });
-socket.on('updateModus', function(state){
+socket.on('updateModus', function(state) {
   localState = state;
   spelModus.innerText = localState.ratCount;
 });
+
+socket.on('updatePlayers', function(state) {
+  localState.players = state.players;
+  
+})
