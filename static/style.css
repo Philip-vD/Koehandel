@@ -194,7 +194,8 @@ button:hover{
   outline: none;
 }
 
-#uitgedaagdeLabel{
+#uitgedaagdeLabel,
+#betaaldeLabel{
   position: absolute;
   left: 78%;
   top: 88%;
@@ -202,7 +203,8 @@ button:hover{
   font-size: 0.6em;
 }
 
-#uitgedaagde{
+#uitgedaagde,
+#betaalde{
   position: absolute;
   left: 92%;
   top: 88%;
