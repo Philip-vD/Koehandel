@@ -102,10 +102,12 @@ button:hover{
   margin-right: 7%;
   margin-left: 7%;
   background-color: rgb(235, 190, 95);
+  border-radius: 30%;
+  padding: 10px;
 }
 
 #opponentObject p {
-    font-size: 20;
+  font-size: 20;
 }
 
 #actueleSpelInformatie {
@@ -119,7 +121,8 @@ button:hover{
 
 #betaalScherm,
 #startKoehandelScherm,
-#uitgedaagdeKoehandelScherm
+#uitgedaagdeKoehandelScherm,
+#rathandelScherm
  {
   position: absolute;
   left: 15%;
@@ -132,9 +135,11 @@ button:hover{
   background-color: rgb(187, 128, 0);
 }
 
+
 #betaalScherm table,
 #startKoehandelScherm table,
-#uitgedaagdeKoehandelScherm table{
+#uitgedaagdeKoehandelScherm table,
+#rathandelScherm table {
   position: absolute;
   left: 50%;
   top: 50%;
@@ -145,7 +150,8 @@ button:hover{
 }
 
 #betaalInfo,
-#koeHandelInzet {
+#koeHandelInzet,
+#rathandelInfo {
   position: relative;
   top: 5%;
 }
@@ -162,7 +168,8 @@ button:hover{
   color: rgb(151, 0, 0);
 }
 
-#accepteerKoehandel{
+#accepteerKoehandel,
+#accepteerRathandel{
   position: absolute;
   left: 80%;
   top: 88%;
@@ -184,7 +191,8 @@ button:hover{
 }
 
 #startKoehandelButton,
-#tegenBodButton{
+#tegenBodButton,
+#legInRat{
   position: absolute;
   left: 50%;
   top: 88%;

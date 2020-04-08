@@ -293,7 +293,6 @@ function verhoogBedrag(e){
       bedragString.innerText = virtueelBod["500"];
       break;
   }
-  console.log(calculateTotal(virtueelBod));
 }
 
 // Log the messages from the server
@@ -330,7 +329,6 @@ function renderOpponents(players) {
       innerHTML += generateOpponentHTML(value.name, cardCount(value.money));
     }
   }
-  console.log(innerHTML);
   opponentContainer.innerHTML = innerHTML;
 }
 
