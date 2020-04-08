@@ -124,15 +124,15 @@ io.on('connection', function (socket) {
     emitStateUpdate(['players']);
   });
 
-  //data = { challengedId: string, offer: geldobject, rat: boolean }
+  //data = { challengedId: string, offer: geldobject}
   socket.on('startKoehandel', function (data) {
     state.mode = 'koehandel';
     handelObject = new KoeHandel(
       socket.id,
       data.offer,
-      data.rat,
+      false,
     );
-    io.to(`${challengedId}`).emit('challenged');
+    io.to(`${data.challengedId}`).emit('challenged');
     money.subtractMoney(state.players[socket.id].money, data.offer);
     io.sockets.emit(
       'message',

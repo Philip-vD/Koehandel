@@ -16,6 +16,7 @@ let virtueelBod = {
   200: 0,
   500: 0,
 };
+
 function resetVirtueelBod() {
   virtueelBod = {
     0: 0,
@@ -102,10 +103,12 @@ function doeTegenBod(){
   uitgedaagdeKoehandelScherm.style.display = "none";
 }
 
+var startKoehandelScherm = document.getElementById("startKoehandelScherm");
 function handleStartKoehandel() {
-  var id = betaaldeSelect.value;
-  socket.emit('startKoeHandel', { id, virtueelBod });
-  resetVirtueelBod()
+  var challengedId = betaaldeSelect.value;
+  socket.emit('startKoehandel', { challengedId, offer: virtueelBod });
+  resetVirtueelBod();
+  startKoehandelScherm.style.display = "none";
 }
 
 // Disable alle geldknoppen
@@ -353,7 +356,7 @@ function setSelectOptions(players) {
   var innerHTML = '';
   for (let [key, value] of Object.entries(players)) {
     if (!(key === socket.id)) {
-      innerHTML += generateRecipientHTML(value.name, cardCount(value.money));
+      innerHTML += generateRecipientHTML(value.name, key);
     }
   }
   betaaldeSelect.innerHTML = innerHTML;
