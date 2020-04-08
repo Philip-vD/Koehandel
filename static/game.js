@@ -85,6 +85,22 @@ actieKnoppen2.Rathandel.addEventListener('click', startRathandel, false);
 actieKnoppen2.Betaling = knoppenActie[3];
 actieKnoppen2.Betaling.addEventListener('click', updateGeldKnoppen, false);
 
+// Initialize alle knoppen die disabled worden tijdens handel
+let disableKnoppen = document.getElementsByClassName('disableKnoppen');
+
+// Disable alle knoppen tijdens handel
+function disableButtons(){
+  for(var knop of disableKnoppen){
+    knop.disabled = true;
+  }
+}
+
+function enableButtons(){
+  for(var knop of disableKnoppen){
+    knop.disabled = false;
+  }
+}
+
 // Start de rathandel
 function startRathandel(){
   socket.emit('startRatHandel');
@@ -358,16 +374,20 @@ socket.on('updateMode', function(state){
   if(localState.mode === 'geen'){
     modusPaneel.style.display = "none";
     rathandelScherm.display = "none";
+    enableButtons();
   } else{
     modusPaneel.style.display = "block";
     switch (mode){
       case 'koehandel':
+        disableButtons();
         break;
       case 'stamboekhandel':
+        disableButtons();
         break;
       case 'rathandel':
         spelModus.getElementsByTagName('p')[0].innerText = "Rathandel";
         rathandelScherm.style.display = "block";
+        disableButtons();
         break;
     }
   }
