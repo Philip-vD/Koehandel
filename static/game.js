@@ -17,6 +17,11 @@ var virtueelBedrag = {
 };
 //localState.players[socket.id].isLeader
 
+// Helper functies
+function cardCount(money) {
+  return Object.values(money).reduce((a, b) => a + b, 0);
+}
+
 //
 // Declare and initialize DOM variables
 //
@@ -164,7 +169,7 @@ function renderOpponents(players) {
   var innerHTML = '';
   for (let [key, value] of Object.entries(players)) {
     if (!(key === socket.id)) {
-      innerHTML += generateOpponentHTML(value.name, 12);
+      innerHTML += generateOpponentHTML(value.name, cardCount(value.money));
     }
   }
   console.log(innerHTML);
