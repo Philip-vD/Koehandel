@@ -9,6 +9,7 @@ body{
 
 p{
   margin: auto;
+  font-size: 30;
 }
 
 ul {
@@ -83,26 +84,28 @@ button:hover{
   text-align: center;
 }
 
-#andereSpelers {
+#opponentContainer {
   position: absolute;
   left: 5%;
   width: 90%;
   height: 15%;
   top: 13%;
   text-align: center;
+  flex: 1;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 }
 
-#andereSpelers ul{
-  margin: auto;
-  height: 100%;
-}
-
-#andereSpelers li{
+.opponentObject {
   display: inline-block;
-  position: relative;
-  top: 25%;
   margin-right: 7%;
   margin-left: 7%;
+  background-color: rgb(235, 190, 95);
+}
+
+#opponentObject p {
+    font-size: 20;
 }
 
 #actueleSpelInformatie {

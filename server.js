@@ -68,7 +68,7 @@ io.on('connection', function (socket) {
   socket.on('new player', function (name) {
     var nameId = null;
     for (let [key, value] of Object.entries(state.players)) {
-      if (value === name)
+      if (value.name === name)
         nameId = key;
     }
     if (nameId) {

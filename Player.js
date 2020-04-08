@@ -11,7 +11,6 @@ class Player {
       200: 0,
       500: 0,
     };
-    this.total = 100;
   }
 }
 
