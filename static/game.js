@@ -66,6 +66,7 @@ let spelMode = document.getElementById("spelModus").getElementsByTagName('p')[0]
 let naamSubmit = document.getElementById('naamSubmit');
 naamSubmit.addEventListener('click', veranderNaam, false);
 let naamInput = naamSubmit.previousSibling.previousSibling;
+let totaalGeld = document.getElementById("totaalGeld");
 
 // Initialize modus paneel
 let modusPaneel = document.getElementById("spelModus");
@@ -461,6 +462,7 @@ function renderOwnMoney(money) {
   for (let [key, value] of Object.entries(money)) {
     document.getElementById('cardCount' + key).innerHTML = value;
   }
+  totaalGeld.innerText = "Totaal: " + calculateTotal(money);
   virtueelBedrag = money;
 }
 
