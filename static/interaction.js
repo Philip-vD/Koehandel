@@ -2,6 +2,8 @@
 let actieKnoppen = {};
 let betaalKnoppen = {};
 let betaalScherm;
+let betaalSchermTekst;
+let betaalSchermBetaalde;
 let startKoehandel = {};
 let veranderNaamScherm;
 let veranderNaamKnop;
@@ -12,6 +14,9 @@ function openBetaalMenu(){
 }
 function sluitBetaalMenu(){
   betaalScherm.style.display = "none";
+}
+function veranderBetaalde(){
+  betaalSchermTekst.innerText = "Je gaat # betalen aan " + betaalSchermBetaalde.value;
 }
 
 // Functies voor startKoehandelScherm
@@ -80,6 +85,8 @@ function initializeVariables(){
   betaalKnoppen.annuleer = document.getElementById('annuleerBetaling');
   betaalKnoppen.betaal = document.getElementById('betaalButton');
   betaalScherm = document.getElementById("betaalScherm");
+  betaalSchermTekst = document.getElementById("betaalInfo");
+  betaalSchermBetaalde = document.getElementById("betaalde");
 
   // Initialize naam verandering scherm
   veranderNaamScherm = document.getElementById("changeNamePanel");
@@ -99,6 +106,9 @@ function registerEvents(){
   // Open of sluit betaalmenu
   actieKnoppen.Betaling.addEventListener('click', openBetaalMenu, false);
   betaalKnoppen.annuleer.addEventListener('click', sluitBetaalMenu, false);
+
+  // Update betaalde
+  betaalSchermBetaalde.addEventListener('change', veranderBetaalde, false);
 
   // Verander naam
   veranderNaamKnop.addEventListener('click', openNaamMenu, false);
