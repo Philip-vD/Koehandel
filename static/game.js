@@ -14,6 +14,8 @@ socket.emit('new player', name);
 // Initalize ezel en rattentellers
 let aantalEzels = document.getElementById('ezelTeller').getElementsByTagName('p')[0];
 let aantalRatten = document.getElementById('rattenTeller').getElementsByTagName('p')[0];
+let mijnNaam = document.getElementById('myName');
+let opponentContainer = document.getElementById('opponentContainer');
 
 // Initialize spelmodus 
 let spelModus = document.getElementById("spelModus").getElementsByTagName('p')[0];
@@ -46,12 +48,27 @@ function veranderNaam(e){
   socket.emit('nameChange', naamInput.value);
 }
 
+function generateOpponentHTML(name, count) {
+  return '<div class=\"opponentObject\"><p>' + name + '<br>' + count + ' krtn</p></div>';
+}
+
+function renderOpponents(players) {
+  var innerHTML = '';
+  for (let [key, value] of Object.entries(players)) {
+    if (!(key === socket.id)) {
+      innerHTML += generateOpponentHTML(value.name, 12);
+    }
+  }
+  console.log(innerHTML);
+  opponentContainer.innerHTML = innerHTML;
+}
+
 // Update ezel teller en rattenteller
-socket.on('updateEzel', function(state){
+socket.on('updateEzelCount', function(state){
   localState = state;
   aantalEzels.innerText = "Ezels: " + localState.ezelCount;
 });
-socket.on('updateRat', function(state){
+socket.on('updateRatCount', function(state){
   localState = state;
   aantalRatten.innerText = "Ratten: " + localState.ezelCount;
 });
@@ -62,5 +79,6 @@ socket.on('updateModus', function(state) {
 
 socket.on('updatePlayers', function(state) {
   localState.players = state.players;
-  
+  mijnNaam.innerHTML = localState.players[socket.id].name;
+  renderOpponents(localState.players);
 })
