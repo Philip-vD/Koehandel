@@ -146,6 +146,16 @@ function handleAcceptRatHandel() {
   resetVirtueelBod();
 }
 
+function handleCounterKoehandel() {
+  socket.emit('counterKoehandel', { offer: virtueelBod });
+  resetVirtueelBod();
+}
+
+function handleAcceptKoehandel() {
+  socket.emit('acceptKoehandel');
+  resetVirtueelBod();
+}
+
 // Disable alle geldknoppen
 function updateGeldKnoppen(){
   for(let i = 0; i < plus1Knoppen.length; i++)
@@ -448,6 +458,10 @@ socket.on('updateMode', function(state){
         break;
     }
   }
+});
+
+socket.on('challenged', function() {
+  uitgedaagdeKoehandelScherm.style.display = "block";
 });
 
 socket.on('updatePlayers', function(state) {
