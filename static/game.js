@@ -52,7 +52,6 @@ function calculateTotal(money) {
 let actieKnoppen2 = {}
 let knoppenActie = document.getElementsByClassName("actieKnop");
 
-
 // Initalize ezel en rattentellers
 let aantalEzels = document.getElementById('ezelTeller').getElementsByTagName('p')[0];
 let aantalRatten = document.getElementById('rattenTeller').getElementsByTagName('p')[0];
@@ -62,7 +61,7 @@ let betaaldeSelect = document.getElementById('betaalde');
 let uitgedaagdeSelect = document.getElementById('uitgedaagde');
 
 // Initialize spelmodus 
-let spelModus = document.getElementById("spelModus").getElementsByTagName('p')[0];
+let spelMode = document.getElementById("spelModus").getElementsByTagName('p')[0];
 
 // Initalize naam submit and add eventlistener
 let naamSubmit = document.getElementById('naamSubmit');
@@ -91,9 +90,35 @@ for(var knop of plus1Knoppen){
   knop.addEventListener('click', verhoogBedrag, false);
 }
 
+// Initialize rathandel 
+let rathandelScherm = document.getElementById('rathandelScherm');
+actieKnoppen2.Rathandel = knoppenActie[2];
+actieKnoppen2.Rathandel.addEventListener('click', startRathandel, false);
+
 // Initialize betaalmenu
 actieKnoppen2.Betaling = knoppenActie[3];
 actieKnoppen2.Betaling.addEventListener('click', updateGeldKnoppen, false);
+
+// Initialize alle knoppen die disabled worden tijdens handel
+let disableKnoppen = document.getElementsByClassName('disableKnoppen');
+
+// Disable alle knoppen tijdens handel
+function disableButtons(){
+  for(var knop of disableKnoppen){
+    knop.disabled = true;
+  }
+}
+
+function enableButtons(){
+  for(var knop of disableKnoppen){
+    knop.disabled = false;
+  }
+}
+
+// Start de rathandel
+function startRathandel(){
+  socket.emit('startRatHandel');
+}
 
 // Handle alle koehandel knoppen
 function accepteerKoehandel(){
@@ -390,13 +415,28 @@ socket.on('updateRatCount', function(state){
 });
 
 // Update modus 
-socket.on('updateModus', function(state){
-  localState.modus = state.modus;
-  if(localState.modus === 'geen'){
+socket.on('updateMode', function(state){
+  let mode = state.mode;
+  localState.mode = mode;
+  if(localState.mode === 'geen'){
     modusPaneel.style.display = "none";
+    rathandelScherm.display = "none";
+    enableButtons();
   } else{
     modusPaneel.style.display = "block";
-    spelModus.innerText = localState.modus;
+    switch (mode){
+      case 'koehandel':
+        disableButtons();
+        break;
+      case 'stamboekhandel':
+        disableButtons();
+        break;
+      case 'rathandel':
+        spelModus.getElementsByTagName('p')[0].innerText = "Rathandel";
+        rathandelScherm.style.display = "block";
+        disableButtons();
+        break;
+    }
   }
 });
 
