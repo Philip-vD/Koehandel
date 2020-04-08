@@ -63,6 +63,7 @@ button:hover{
   height: 10%;
   top: 0;
   border-radius: 20%;
+  display: none;
 }
 
 #spelModus p,

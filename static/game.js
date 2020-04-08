@@ -101,6 +101,7 @@ actieKnoppen2.Stamboek = knoppenActie[1];
 actieKnoppen2.Stamboek.addEventListener('click', startStamboekHandel, false);
 
 // Initialize betaalmenu
+let betaalMenu = document.getElementById("betaalScherm");
 actieKnoppen2.Betaling = knoppenActie[3];
 actieKnoppen2.Betaling.addEventListener('click', updateGeldKnoppen, false);
 
@@ -140,7 +141,7 @@ function doeTegenBod(){
 
 var startKoehandelScherm = document.getElementById("startKoehandelScherm");
 function handleStartKoehandel() {
-  var challengedId = betaaldeSelect.value;
+  var challengedId = uitgedaagdeSelect.value;
   socket.emit('startKoehandel', { challengedId, offer: virtueelBod });
   resetVirtueelBod();
   startKoehandelScherm.style.display = "none";
@@ -154,6 +155,13 @@ function handleSubmitRatHandel() {
 function handleAcceptRatHandel() {
   socket.emit('acceptRatHandel');
   resetVirtueelBod();
+}
+
+function handleBetaal(){
+  var recipient = betaaldeSelect.value;
+  socket.emit('giveMoney', {money: virtueelBod, recipient })
+  resetVirtueelBod();
+  betaalMenu.style.display = "none";
 }
 
 // Disable alle geldknoppen
@@ -422,6 +430,7 @@ function renderOwnMoney(money) {
   for (let [key, value] of Object.entries(money)) {
     document.getElementById('cardCount' + key).innerHTML = value;
   }
+  virtueelBedrag = money;
 }
 
 // Update ezel teller en rattenteller
@@ -441,7 +450,7 @@ socket.on('updateMode', function(state){
   if(localState.mode === 'geen'){
     modusPaneel.style.display = "none";
     stamboekHandelScherm.style.display = "none";
-    rathandelScherm.display = "none";
+    rathandelScherm.style.display = "none";
     enableButtons();
   } else{
     modusPaneel.style.display = "block";
