@@ -28,7 +28,6 @@ function resetVirtueelBod() {
     500: 0,
   };
 }
-//localState.players[socket.id].isLeader
 
 // Helper functies
 // Bereken aantal kaarten
@@ -107,6 +106,28 @@ actieKnoppen2.Betaling.addEventListener('click', updateGeldKnoppen, false);
 
 // Initialize alle knoppen die disabled worden tijdens handel
 let disableKnoppen = document.getElementsByClassName('disableKnoppen');
+
+// Initialize de telknoppen voor ratten en ezels
+let ratPlus = document.getElementById("ratPlus1");
+let ezelPlus = document.getElementById('ezelPlus1');
+ratPlus.addEventListener('click', addRat, false);
+ezelPlus.addEventListener('click', addEzel, false);
+
+// Remove counter knoppen 
+function removeCounters(isLeader){
+  if(!isLeader){
+    ratPlus.style.display = "none";
+    ezelPlus.style.display = "none";
+  }
+}
+
+// Voeg ezel of rat toe
+function addRat(){
+  socket.emit('rat');
+}
+function addEzel(){
+  socket.emit('ezel');
+}
 
 // Disable alle knoppen tijdens handel
 function disableButtons(){
@@ -450,7 +471,7 @@ socket.on('updateEzelCount', function(state){
 });
 socket.on('updateRatCount', function(state){
   localState.ratCount = state.ratCount;
-  aantalRatten.innerText = "Ratten: " + localState.ezelCount;
+  aantalRatten.innerText = "Ratten: " + localState.ratCount;
 });
 
 // Update modus 
@@ -493,4 +514,5 @@ socket.on('updatePlayers', function(state) {
   renderOpponents(localState.players);
   renderOwnMoney(localState.players[socket.id].money);
   setSelectOptions(localState.players);
+  removeCounters(localState.players[socket.id].isLeader);
 });

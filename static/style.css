@@ -56,6 +56,18 @@ button:hover{
   text-align: center;
 }
 
+#ezelPlus1,
+#ratPlus1{
+  background: none;
+  background-color: rgb(243, 199, 142);
+  border-radius: 30%;
+  position: relative;
+  top: 18%;
+  left: 37%;
+  transform: translate(-50%, -50%);
+  outline: none;
+}
+
 #spelModus {
   position: absolute;
   left: 35%;

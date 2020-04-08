@@ -109,7 +109,7 @@ io.on('connection', function (socket) {
   });
 
   socket.on('rat', function () {
-    if (state.ezelCount === 4) {
+    if (state.ratCount === 4) {
       io.sockets.emit('message', 'Het max aantal ratten is al bereikt.');
     } else {
       state.ratCount++;
