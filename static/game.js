@@ -48,11 +48,14 @@ function veranderNaam(e){
 
 // Update ezel teller en rattenteller
 socket.on('updateEzel', function(state){
+  localState = state;
   aantalEzels.innerText = "Ezels: " + localState.ezelCount;
 });
 socket.on('updateRat', function(state){
+  localState = state;
   aantalRatten.innerText = "Ratten: " + localState.ezelCount;
 });
 socket.on('updateModus', function(state){
+  localState = state;
   spelModus.innerText = localState.ratCount;
 });

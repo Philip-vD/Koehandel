@@ -57,9 +57,9 @@ function emitStateUpdate(values) {
 }
 
 function sendFullState(socket) {
-  Object.keys(state).foreach(key => {
+  for(key in Object.keys(state)) {
     socket.emit(getStateKeyUpdateName(key), state);
-  });
+  }
 }
 
 // Add the WebSocket handlers
