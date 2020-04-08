@@ -26,7 +26,6 @@ let naamInput = naamSubmit.previousSibling.previousSibling;
 // Initialize modus paneel
 let modusPaneel = document.getElementById("spelModus");
 
-
 // Log the messages from the server
 socket.on('message', function (data) {
   console.log(data);
