@@ -193,6 +193,8 @@ io.on('connection', function (socket) {
       money.subtractMoney(state.players[socket.id].money, data);
       money.addMoney(state.players[handelObject.challengerId].money, data);
       money.addMoney(state.players[socket.id].money, handelObject.offer);
+      socket.emit('message', state.players[winner].name + ' heeft gewonnen! Jij hebt ' + offer + ' ontvangen.');
+      io.to(`${handelObject.challengerId}`).emit('message', state.players[winner].name + ' heeft gewonnen! Jij hebt ' + counterOffer + ' ontvangen.');
       state.mode = 'geen';
       handelObject = null;
       emitStateUpdate(['mode', 'players']);
