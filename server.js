@@ -239,6 +239,15 @@ io.on('connection', function (socket) {
   socket.on('disconnect', function () {
     console.log('Player ' + socket.id + ' has disconnected.');
   });
+
+  socket.on('resetMode', function() {
+    if(handelObject && handelObject.challengerId) {
+      money.addMoney(state.players[handelObject.challengerId].money, handelObject.offer);
+    }
+    state.mode = 'geen';
+    handelObject = null;
+    emitStateUpdate(['mode', 'players']);
+  });
 });
 
 

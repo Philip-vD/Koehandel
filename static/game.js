@@ -585,6 +585,7 @@ socket.on('updateMode', function(state){
     modusPaneel.style.display = "none";
     stamboekHandelScherm.style.display = "none";
     rathandelScherm.style.display = "none";
+    uitgedaagdeKoehandelScherm.style.display = "none";
     enableButtons();
   } else{
     modusPaneel.style.display = "block";
