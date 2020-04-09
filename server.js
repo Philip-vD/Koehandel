@@ -32,7 +32,7 @@ var state = {
 };
 
 var handelObject;
-var ratMoney;
+var ratMoney = emptyHand();
 var gelijkSpellen = 0;
 
 //const
@@ -42,6 +42,18 @@ var ezelToMoney = {
   2: 200,
   3: 500,
 };
+
+function emptyRatMoney() {
+  return {
+  0: 0,
+  10: 0,
+  20: 0,
+  50: 0,
+  100: 0,
+  200: 0,
+  500: 0,
+  }
+}
 
 //Routing
 app.get('/', function (request, response) {
@@ -202,7 +214,7 @@ io.on('connection', function (socket) {
 
   socket.on('startRatHandel', function() {
     state.mode = 'rathandel';
-    ratMoney = {};
+    ratMoney = emptyHand();
     io.sockets.emit('message', 'Rathandel is gestart. Er zitten momenteel 0 kaarten in de ratpot.');
     emitStateUpdate(['mode']);
   });
@@ -211,7 +223,7 @@ io.on('connection', function (socket) {
   socket.on('submitRatHandel', function(data) {
     money.subtractMoney(state.players[socket.id].money, data);
     money.addMoney(ratMoney, data);
-    io.sockets.emit('message', 'Er zitten momenteel ' + money.cardCount(ratMoney) + ' in de ratpot.');
+    io.sockets.emit('message', 'Er zitten momenteel ' + money.cardCount(ratMoney) + ' in de ratpot.');  
     emitStateUpdate(['players']);
   });
 
