@@ -29,6 +29,10 @@ function resetVirtueelBod() {
   };
 }
 
+function resetVirtueelBedrag(){
+  virtueelBedrag = localState.players[socket.id].money;
+}
+
 // Helper functies
 // Bereken aantal kaarten
 function cardCount(money) {
@@ -191,12 +195,14 @@ function handleStartKoehandel() {
   var challengedId = uitgedaagdeSelect.value;
   socket.emit('startKoehandel', { challengedId, offer: virtueelBod });
   resetVirtueelBod();
+  resetVirtueelBedrag();
   startKoehandelScherm.style.display = "none";
 }
 
 function handleSubmitRatHandel() {
   socket.emit('submitRatHandel', virtueelBod);
   resetVirtueelBod();
+  resetVirtueelBedrag();
   disableMin1Knoppen();
   resetGeldBedragen();
   updateGeldKnoppen();
@@ -205,35 +211,42 @@ function handleSubmitRatHandel() {
 function handleAcceptRatHandel() {
   socket.emit('acceptRatHandel');
   resetVirtueelBod();
+  resetVirtueelBedrag();
 }
 
 function handleCounterKoehandel() {
   socket.emit('counterKoehandel', virtueelBod);
   resetVirtueelBod();
+  resetVirtueelBedrag();
 }
 
 function handleAcceptKoehandel() {
   socket.emit('acceptKoehandel');
   resetVirtueelBod();
+  resetVirtueelBedrag();
 }
 
 function sluitBetaal(){
   resetVirtueelBod();
+  resetVirtueelBedrag();
   betaalMenu.style.display = "none";
   resetGeldBedragen();
   disableMin1Knoppen();
+  updateGeldKnoppen();
 }
 
 function handleBetaal(){
   var recipient = betaaldeSelect.value;
   socket.emit('giveMoney', {money: virtueelBod, recipient })
   resetVirtueelBod();
+  resetVirtueelBedrag();
   betaalMenu.style.display = "none";
 }
 
 function sluitStartKoehandelScherm(){
   startKoehandel.scherm.style.display = "none";
   resetVirtueelBod();
+  resetVirtueelBedrag();
   virtueelBedrag = localState.players[socket.id].money;
   resetGeldBedragen();
   disableMin1Knoppen();
@@ -268,31 +281,47 @@ function updateGeldKnoppen(){
     switch(i%7){
       case 0:
         if(virtueelBedrag["0"] === 0)
-          plus1Knoppen[i].disabled = true;
+          console.log('geld is op');
+          //plus1Knoppen[i].disabled = true;
+        else{
+          plus1Knoppen[i].disabled = false;
+        }
         break;
         case 1:
         if(virtueelBedrag["10"] === 0)
           plus1Knoppen[i].disabled = true;
+        else
+          plus1Knoppen[i].disabled = false;
         break;
         case 2:
         if(virtueelBedrag["20"] === 0)
           plus1Knoppen[i].disabled = true;
+        else
+          plus1Knoppen[i].disabled = false;
         break;
         case 3:
         if(virtueelBedrag["50"] === 0)
           plus1Knoppen[i].disabled = true;
+        else
+          plus1Knoppen[i].disabled = false;
         break;
         case 4:
         if(virtueelBedrag["100"] === 0)
           plus1Knoppen[i].disabled = true;
+        else
+          plus1Knoppen[i].disabled = false;
         break;
         case 5:
         if(virtueelBedrag["200"] === 0)
           plus1Knoppen[i].disabled = true;
+        else
+          plus1Knoppen[i].disabled = false;
         break;
         case 6:
         if(virtueelBedrag["500"] === 0)
           plus1Knoppen[i].disabled = true;
+        else
+          plus1Knoppen[i].disabled = false;
         break;
     }
   }
@@ -411,8 +440,10 @@ function verhoogBedrag(e){
   }
   switch(i){
     case 5:
+      console.log(localState.players[socket.id].money);
       virtueelBod["0"]++;
       virtueelBedrag["0"]--;
+      console.log(localState.players[socket.id].money);
       if(virtueelBedrag["0"] === 0){
         e.target.disabled = true;
       }

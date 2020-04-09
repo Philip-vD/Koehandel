@@ -82,7 +82,7 @@
             <td><button class="plus1Button">+1</button></td>
           </tr>
         </table>
-        <button id="annuleerBetaling" onclick="sluitBetaal()">Annuleer</button>
+        <button id="annuleerBetaling" onclick="sluitBetaal()" disabled>Annuleer</button>
         <button id="betaalButton" onclick="handleBetaal()">Betaal</button>
         <label id="betaaldeLabel" for="betaalde">Betaalde:</label>
         <select name="betaalde" id="betaalde">
@@ -138,14 +138,14 @@
             <td><button class="plus1Button">+1</button></td>
           </tr>
         </table>
-        <button id="annuleerKoehandel" onclick="sluitStartKoehandelScherm()">Annuleer</button>
+        <button id="annuleerKoehandel" onclick="sluitStartKoehandelScherm()" disabled>Annuleer</button>
         <button id="startKoehandelButton" onclick="handleStartKoehandel()">Start Koehandel</button>
         <label id="uitgedaagdeLabel" for="uitgedaagde">Uitgedaagde:</label>
         <select name="uitgedaagde" id="uitgedaagde">
         </select>
       </div>
       <div class="paneel" id="uitgedaagdeKoehandelScherm">
-        <p id="koeHandelInzet">Er is met # kaarten geboden.</p>
+        <p id="koeHandelInzet">Er is met op jou dieren geboden.</p>
         <table>
           <tr>
             <td colspan="3">
