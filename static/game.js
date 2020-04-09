@@ -29,8 +29,12 @@ function resetVirtueelBod() {
   };
 }
 
+function jsonCopy(src){
+  return JSON.parse(JSON.stringify(src));
+}
+
 function resetVirtueelBedrag(){
-  virtueelBedrag = localState.players[socket.id].money;
+  virtueelBedrag = jsonCopy(localState.players[socket.id].money);
 }
 
 // Helper functies
@@ -247,7 +251,6 @@ function sluitStartKoehandelScherm(){
   startKoehandel.scherm.style.display = "none";
   resetVirtueelBod();
   resetVirtueelBedrag();
-  virtueelBedrag = localState.players[socket.id].money;
   resetGeldBedragen();
   disableMin1Knoppen();
 }
@@ -281,8 +284,7 @@ function updateGeldKnoppen(){
     switch(i%7){
       case 0:
         if(virtueelBedrag["0"] === 0)
-          console.log('geld is op');
-          //plus1Knoppen[i].disabled = true;
+          plus1Knoppen[i].disabled = true;
         else{
           plus1Knoppen[i].disabled = false;
         }
@@ -440,10 +442,8 @@ function verhoogBedrag(e){
   }
   switch(i){
     case 5:
-      console.log(localState.players[socket.id].money);
       virtueelBod["0"]++;
       virtueelBedrag["0"]--;
-      console.log(localState.players[socket.id].money);
       if(virtueelBedrag["0"] === 0){
         e.target.disabled = true;
       }
@@ -564,7 +564,7 @@ function renderOwnMoney(money) {
     document.getElementById('cardCount' + key).innerHTML = value;
   }
   totaalGeld.innerText = "Totaal: " + calculateTotal(money);
-  virtueelBedrag = money;
+  virtueelBedrag = jsonCopy(money);
 }
 
 // Update ezel teller en rattenteller
