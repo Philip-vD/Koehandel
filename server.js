@@ -101,15 +101,16 @@ io.on('connection', function (socket) {
     if (state.ezelCount === 4) {
       io.sockets.emit('message', 'Het max aantal ezels is al bereikt.');
     } else {
-      for (const player in state.players)
-        money.addAmount(player.money, ezelToMoney[state.ezelCount]);
+      for (const player in state.players){
+        money.addAmount(state.players[player].money, ezelToMoney[state.ezelCount]);
+      }
       state.ezelCount++;
     }
     emitStateUpdate(['ezelCount', 'players']);
   });
 
   socket.on('rat', function () {
-    if (state.ezelCount === 4) {
+    if (state.ratCount === 4) {
       io.sockets.emit('message', 'Het max aantal ratten is al bereikt.');
     } else {
       state.ratCount++;
@@ -120,26 +121,26 @@ io.on('connection', function (socket) {
   //data = {money: geldobject, recipient: string (player id)}
   socket.on('giveMoney', function (data) {
     money.subtractMoney(state.players[socket.id].money, data.money);
-    money.addMoney(state.palyers[data.recipient].money, data.money);
+    money.addMoney(state.players[data.recipient].money, data.money);
     emitStateUpdate(['players']);
   });
 
-  //data = { challengedId: string, offer: geldobject, rat: boolean }
+  //data = { challengedId: string, offer: geldobject}
   socket.on('startKoehandel', function (data) {
     state.mode = 'koehandel';
     handelObject = new KoeHandel(
       socket.id,
       data.offer,
-      data.rat,
+      false,
     );
-    io.to(`${challengedId}`).emit('challenged');
+    io.to(`${data.challengedId}`).emit('challenged');
     money.subtractMoney(state.players[socket.id].money, data.offer);
     io.sockets.emit(
       'message',
       state.players[socket.id].name +
-        'heeft ' +
+        ' heeft ' +
         money.cardCount(data.offer) +
-        'kaarten op tafel gelegd.',
+        ' kaarten op tafel gelegd.',
     );
     emitStateUpdate(['players', 'mode']);
   });
@@ -173,7 +174,7 @@ io.on('connection', function (socket) {
       var winner = (offer > counterOffer) !== handelObject.rat ?
         handelObject.challengerId :
         socket.id;
-      io.sockets.emit('message', state.players[winner].name + 'heeft gewonnen!');
+      io.sockets.emit('message', state.players[winner].name + ' heeft gewonnen!');
       money.subtractMoney(state.players[socket.id].money, data);
       money.addMoney(state.players[handelObject.challengerId].money, data);
       money.addMoney(state.players[socket.id].money, handelObject.offer);

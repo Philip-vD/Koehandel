@@ -56,6 +56,18 @@ button:hover{
   text-align: center;
 }
 
+#ezelPlus1,
+#ratPlus1{
+  background: none;
+  background-color: rgb(243, 199, 142);
+  border-radius: 30%;
+  position: relative;
+  top: 18%;
+  left: 37%;
+  transform: translate(-50%, -50%);
+  outline: none;
+}
+
 #spelModus {
   position: absolute;
   left: 35%;
@@ -63,6 +75,7 @@ button:hover{
   height: 10%;
   top: 0;
   border-radius: 20%;
+  display: none;
 }
 
 #spelModus p,
@@ -102,10 +115,12 @@ button:hover{
   margin-right: 7%;
   margin-left: 7%;
   background-color: rgb(235, 190, 95);
+  border-radius: 30%;
+  padding: 10px;
 }
 
 #opponentObject p {
-    font-size: 20;
+  font-size: 20;
 }
 
 #actueleSpelInformatie {
@@ -120,6 +135,7 @@ button:hover{
 #betaalScherm,
 #startKoehandelScherm,
 #uitgedaagdeKoehandelScherm,
+#rathandelScherm,
 #stamboekHandelScherm
  {
   position: absolute;
@@ -135,7 +151,8 @@ button:hover{
 
 #betaalScherm table,
 #startKoehandelScherm table,
-#uitgedaagdeKoehandelScherm table{
+#uitgedaagdeKoehandelScherm table,
+#rathandelScherm table {
   position: absolute;
   left: 50%;
   top: 50%;
@@ -146,7 +163,8 @@ button:hover{
 }
 
 #betaalInfo,
-#koeHandelInzet {
+#koeHandelInzet,
+#rathandelInfo {
   position: relative;
   top: 5%;
 }
@@ -163,7 +181,8 @@ button:hover{
   color: rgb(151, 0, 0);
 }
 
-#accepteerKoehandel{
+#accepteerKoehandel,
+#accepteerRathandel{
   position: absolute;
   left: 80%;
   top: 88%;
@@ -187,7 +206,8 @@ button:hover{
 }
 
 #startKoehandelButton,
-#tegenBodButton{
+#tegenBodButton,
+#legInRat{
   position: absolute;
   left: 50%;
   top: 88%;

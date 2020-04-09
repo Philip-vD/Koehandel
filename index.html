@@ -15,13 +15,17 @@
 
       </canvas>
       <div id="ezelTeller">
+        <!-- <button id="ezelMin1">-1</button> -->
         <p>Ezels: 0</p>
+        <button id="ezelPlus1">+1</button>
       </div>
       <div class="paneel" id="spelModus">
         <p>{Spelmodus}</p>
       </div>
       <div id="rattenTeller">
+        <!-- <button id="ratMin1">-1</button> -->
         <p>Ratten: 0</p>
+        <button id="ratPlus1">+1</button>
       </div>
       <div id="opponentContainer">
       </div>
@@ -29,7 +33,7 @@
         <p>Actuele Spelinformatie</p>
       </div>
       <div class="paneel" id="betaalScherm">
-        <p id="betaalInfo">Je gaat # betalen aan Joris</p>
+        <p id="betaalInfo">Je gaat # betalen aan ?</p>
         <table>
           <tr>
             <td colspan="3">
@@ -79,16 +83,13 @@
           </tr>
         </table>
         <button id="annuleerBetaling">Annuleer</button>
-        <button id="betaalButton">Betaal</button>
-        <label id="betaaldeLabel" for="betaalde">Uitgedaagde:</label>
+        <button id="betaalButton" onclick="handleBetaal()">Betaal</button>
+        <label id="betaaldeLabel" for="betaalde">Betaalde:</label>
         <select name="betaalde" id="betaalde">
-          <option value="Joris">Joris</option>
-          <option value="Philip">Philip</option>
-          <option value="Pim">Pim</option>
         </select>
       </div>
       <div class="paneel" id="startKoehandelScherm">
-        <p id="koeHandelInzet">Je gaat # inleggen en daagt Joris uit</p>
+        <p id="koeHandelInzet">Je gaat # inleggen en daagt ? uit</p>
         <table>
           <tr>
             <td colspan="3">
@@ -138,12 +139,9 @@
           </tr>
         </table>
         <button id="annuleerKoehandel">Annuleer</button>
-        <button id="startKoehandelButton">Start Koehandel</button>
+        <button id="startKoehandelButton" onclick="handleStartKoehandel()">Start Koehandel</button>
         <label id="uitgedaagdeLabel" for="uitgedaagde">Uitgedaagde:</label>
         <select name="uitgedaagde" id="uitgedaagde">
-          <option value="Joris">Joris</option>
-          <option value="Philip">Philip</option>
-          <option value="Pim">Pim</option>
         </select>
       </div>
       <div class="paneel" id="uitgedaagdeKoehandelScherm">
@@ -196,8 +194,65 @@
             <td><button class="plus1Button">+1</button></td>
           </tr>
         </table>
-        <button id="tegenBodButton">Doe tegen-bod</button>
-        <button id="accepteerKoehandel">Accepteer</button>
+        <button id="tegenBodButton" onclick="handleCounterKoehandel()">Doe tegen-bod</button>
+        <button id="accepteerKoehandel" onclick="handleAcceptKoehandel()">Accepteer</button>
+      </div>
+      <div class="paneel" id="rathandelScherm">
+        <p id="rathandelInfo">Leg een kaart op de ratstapel</p>
+        <table>
+          <tr>
+            <td colspan="3">
+              <img class="geld" src="/Images/0geld.jpeg" alt="Nul geld kaart">
+            </td>
+            <td colspan="3">
+              <img class="geld" src="/Images/10geld.jpg" alt="10 geld kaart">
+            </td>
+            <td colspan="3"> 
+              <img class="geld" src="/Images/20geld.jpg" alt="20 geld kaart">
+            </td>
+            <td colspan="3">
+              <img class="geld" src="/Images/50geld.jpg" alt="50 geld kaart">
+            </td>
+            <td colspan="3">
+              <img class="geld" src="/Images/100geld.jpg" alt="100 geld kaart">
+            </td>
+            <td colspan="3">
+              <img class="geld" src="/Images/200geld.jpg" alt="20 geld kaart">
+            </td>
+            <td colspan="3">
+              <img class="geld" src="/Images/500geld.jpg" alt="500 geld kaart">
+            </td>
+          </tr>
+          <tr>
+            <td><button class="min1Button" disabled>-1</button></td>
+            <td>0</td>
+            <td><button class="plus1Button">+1</button></td>
+            <td><button class="min1Button" disabled>-1</button></td>
+            <td>0</td>
+            <td><button class="plus1Button">+1</button></td>
+            <td><button class="min1Button" disabled>-1</button></td>
+            <td>0</td>
+            <td><button class="plus1Button">+1</button></td>
+            <td><button class="min1Button" disabled>-1</button></td>
+            <td>0</td>
+            <td><button class="plus1Button">+1</button></td>
+            <td><button class="min1Button" disabled>-1</button></td>
+            <td>0</td>
+            <td><button class="plus1Button">+1</button></td>
+            <td><button class="min1Button" disabled>-1</button></td>
+            <td>0</td>
+            <td><button class="plus1Button">+1</button></td>
+            <td><button class="min1Button"disabled>-1</button></td>
+            <td>0</td>
+            <td><button class="plus1Button">+1</button></td>
+          </tr>
+        </table>
+        <button id="legInRat" onclick="handleSubmitRandHandel()">Leg kaart in</button>
+        <button id="accepteerRathandel" onclick="handleAcceptRatHandel()">Accepteer</button>
+      </div>
+      <div class="paneel" id="stamboekHandelScherm">
+        <p>Druk op de knop wanneer het kaartenaantal genoemd wordt dat jij bereid bent te betalen</p>
+        <button id='claimStamboekDier' onclick="claimStamboekDier()">Claim 'm!</button>
       </div>
       <div class="paneel" id="changeNamePanel">
         <form action="">
@@ -211,7 +266,7 @@
         <ul>
           <li class="naam" id="myName">Bo</li>
           <li id="totaalGeld">Totaal: geld</li>
-          <button id="veranderNaam">Verander Naam</button>
+          <button class="disableKnoppen" id="veranderNaam">Verander Naam</button>
         </ul>
       </div>
       <div id="geldVoorraad">
@@ -250,16 +305,12 @@
           </tr>
         </table>
       </div>
-      <div class="paneel" id="stamboekHandelScherm">
-          <p>Druk op de knop wanneer het kaartenaantal genoemd wordt dat jij bereid bent te betalen</p>
-          <button id='claimStamboekDier' onclick="claimStamboekDier()">Claim 'm!</button>
-      </div>
       <div class="paneel" id="actieMenu">
         <p>Acties</p>
-        <button class="actieKnop">Koehandel</button>
-        <button class="actieKnop">Stamboek</button>
-        <button class="actieKnop">Rathandel</button>
-        <button class="actieKnop">Betaling</button>
+        <button class="actieKnop disableKnoppen">Koehandel</button>
+        <button class="actieKnop disableKnoppen">Stamboek</button>
+        <button class="actieKnop disableKnoppen">Rathandel</button>
+        <button class="actieKnop disableKnoppen">Betaling</button>
       </div>
     </div>
   </body>

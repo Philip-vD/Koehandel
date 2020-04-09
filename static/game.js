@@ -16,7 +16,18 @@ let virtueelBod = {
   200: 0,
   500: 0,
 };
-//localState.players[socket.id].isLeader
+
+function resetVirtueelBod() {
+  virtueelBod = {
+    0: 0,
+    10: 0,
+    20: 0,
+    50: 0,
+    100: 0,
+    200: 0,
+    500: 0,
+  };
+}
 
 // Helper functies
 // Bereken aantal kaarten
@@ -40,20 +51,22 @@ function calculateTotal(money) {
 let actieKnoppen2 = {}
 let knoppenActie = document.getElementsByClassName("actieKnop");
 
-
 // Initalize ezel en rattentellers
 let aantalEzels = document.getElementById('ezelTeller').getElementsByTagName('p')[0];
 let aantalRatten = document.getElementById('rattenTeller').getElementsByTagName('p')[0];
 let mijnNaam = document.getElementById('myName');
 let opponentContainer = document.getElementById('opponentContainer');
+let betaaldeSelect = document.getElementById('betaalde');
+let uitgedaagdeSelect = document.getElementById('uitgedaagde');
 
 // Initialize spelmodus 
-let spelModus = document.getElementById("spelModus").getElementsByTagName('p')[0];
+let spelMode = document.getElementById("spelModus").getElementsByTagName('p')[0];
 
 // Initalize naam submit and add eventlistener
 let naamSubmit = document.getElementById('naamSubmit');
 naamSubmit.addEventListener('click', veranderNaam, false);
 let naamInput = naamSubmit.previousSibling.previousSibling;
+let totaalGeld = document.getElementById("totaalGeld");
 
 // Initialize modus paneel
 let modusPaneel = document.getElementById("spelModus");
@@ -77,9 +90,68 @@ for(var knop of plus1Knoppen){
   knop.addEventListener('click', verhoogBedrag, false);
 }
 
+// Initialize rathandel 
+let rathandelScherm = document.getElementById('rathandelScherm');
+actieKnoppen2.Rathandel = knoppenActie[2];
+actieKnoppen2.Rathandel.addEventListener('click', startRathandel, false);
+
+// Initialize stamboekhandel
+let stamboekHandelScherm = document.getElementById('stamboekHandelScherm');
+actieKnoppen2.Stamboek = knoppenActie[1];
+actieKnoppen2.Stamboek.addEventListener('click', startStamboekHandel, false);
+
 // Initialize betaalmenu
+let betaalMenu = document.getElementById("betaalScherm");
 actieKnoppen2.Betaling = knoppenActie[3];
 actieKnoppen2.Betaling.addEventListener('click', updateGeldKnoppen, false);
+
+// Initialize alle knoppen die disabled worden tijdens handel
+let disableKnoppen = document.getElementsByClassName('disableKnoppen');
+
+// Initialize de telknoppen voor ratten en ezels
+let ratPlus = document.getElementById("ratPlus1");
+let ezelPlus = document.getElementById('ezelPlus1');
+ratPlus.addEventListener('click', addRat, false);
+ezelPlus.addEventListener('click', addEzel, false);
+
+// Remove counter knoppen 
+function removeCounters(isLeader){
+  if(!isLeader){
+    ratPlus.style.display = "none";
+    ezelPlus.style.display = "none";
+  }
+}
+
+// Voeg ezel of rat toe
+function addRat(){
+  socket.emit('rat');
+}
+function addEzel(){
+  socket.emit('ezel');
+}
+
+// Disable alle knoppen tijdens handel
+function disableButtons(){
+  for(var knop of disableKnoppen){
+    knop.disabled = true;
+  }
+}
+
+function enableButtons(){
+  for(var knop of disableKnoppen){
+    knop.disabled = false;
+  }
+}
+
+// Start de rathandel
+function startRathandel(){
+  socket.emit('startRatHandel');
+}
+
+// Start de stamboekhandel
+function startStamboekHandel(){
+  socket.emit('startStamboekHandel');
+}
 
 // Handle alle koehandel knoppen
 function accepteerKoehandel(){
@@ -87,6 +159,41 @@ function accepteerKoehandel(){
 }
 function doeTegenBod(){
   uitgedaagdeKoehandelScherm.style.display = "none";
+}
+
+var startKoehandelScherm = document.getElementById("startKoehandelScherm");
+function handleStartKoehandel() {
+  var challengedId = uitgedaagdeSelect.value;
+  socket.emit('startKoehandel', { challengedId, offer: virtueelBod });
+  resetVirtueelBod();
+  startKoehandelScherm.style.display = "none";
+}
+
+function handleSubmitRatHandel() {
+  socket.emit('submitRatHandel', { offer: virtueelBod });
+  resetVirtueelBod();
+}
+
+function handleAcceptRatHandel() {
+  socket.emit('acceptRatHandel');
+  resetVirtueelBod();
+}
+
+function handleCounterKoehandel() {
+  socket.emit('counterKoehandel', { offer: virtueelBod });
+  resetVirtueelBod();
+}
+
+function handleAcceptKoehandel() {
+  socket.emit('acceptKoehandel');
+  resetVirtueelBod();
+}
+
+function handleBetaal(){
+  var recipient = betaaldeSelect.value;
+  socket.emit('giveMoney', {money: virtueelBod, recipient })
+  resetVirtueelBod();
+  betaalMenu.style.display = "none";
 }
 
 // Disable alle geldknoppen
@@ -293,7 +400,6 @@ function verhoogBedrag(e){
       bedragString.innerText = virtueelBod["500"];
       break;
   }
-  console.log(calculateTotal(virtueelBod));
 }
 
 // Log the messages from the server
@@ -327,6 +433,21 @@ function generateOpponentHTML(name, count) {
   return '<div class=\"opponentObject\"><p>' + name + '<br>' + count + ' krtn</p></div>';
 }
 
+function generateRecipientHTML(name, id) {
+  return '<option value=\"' + id + '\">' + name + '</option>';
+}
+
+function setSelectOptions(players) {
+  var innerHTML = '';
+  for (let [key, value] of Object.entries(players)) {
+    if (!(key === socket.id)) {
+      innerHTML += generateRecipientHTML(value.name, key);
+    }
+  }
+  betaaldeSelect.innerHTML = innerHTML;
+  uitgedaagdeSelect.innerHTML = innerHTML;
+}
+
 function renderOpponents(players) {
   var innerHTML = '';
   for (let [key, value] of Object.entries(players)) {
@@ -334,7 +455,6 @@ function renderOpponents(players) {
       innerHTML += generateOpponentHTML(value.name, cardCount(value.money));
     }
   }
-  console.log(innerHTML);
   opponentContainer.innerHTML = innerHTML;
 }
 
@@ -342,6 +462,8 @@ function renderOwnMoney(money) {
   for (let [key, value] of Object.entries(money)) {
     document.getElementById('cardCount' + key).innerHTML = value;
   }
+  totaalGeld.innerText = "Totaal: " + calculateTotal(money);
+  virtueelBedrag = money;
 }
 
 // Update ezel teller en rattenteller
@@ -351,18 +473,41 @@ socket.on('updateEzelCount', function(state){
 });
 socket.on('updateRatCount', function(state){
   localState.ratCount = state.ratCount;
-  aantalRatten.innerText = "Ratten: " + localState.ezelCount;
+  aantalRatten.innerText = "Ratten: " + localState.ratCount;
 });
 
 // Update modus 
-socket.on('updateModus', function(state){
-  localState.modus = state.modus;
-  if(localState.modus === 'geen'){
+socket.on('updateMode', function(state){
+  let mode = state.mode;
+  localState.mode = mode;
+  if(localState.mode === 'geen'){
     modusPaneel.style.display = "none";
+    stamboekHandelScherm.style.display = "none";
+    rathandelScherm.style.display = "none";
+    enableButtons();
   } else{
     modusPaneel.style.display = "block";
-    spelModus.innerText = localState.modus;
+    switch (mode){
+      case 'koehandel':
+        spelModus.getElementsByTagName('p')[0].innerText = "Koehandel";
+        disableButtons();
+        break;
+      case 'stamboekhandel':
+        spelModus.getElementsByTagName('p')[0].innerText = "Stamboekhandel";
+        stamboekHandelScherm.style.display = "block";
+        disableButtons();
+        break;
+      case 'rathandel':
+        spelModus.getElementsByTagName('p')[0].innerText = "Rathandel";
+        rathandelScherm.style.display = "block";
+        disableButtons();
+        break;
+    }
   }
+});
+
+socket.on('challenged', function() {
+  uitgedaagdeKoehandelScherm.style.display = "block";
 });
 
 socket.on('updatePlayers', function(state) {
@@ -370,4 +515,6 @@ socket.on('updatePlayers', function(state) {
   mijnNaam.innerHTML = localState.players[socket.id].name;
   renderOpponents(localState.players);
   renderOwnMoney(localState.players[socket.id].money);
+  setSelectOptions(localState.players);
+  removeCounters(localState.players[socket.id].isLeader);
 });
