@@ -138,9 +138,9 @@ io.on('connection', function (socket) {
     io.sockets.emit(
       'message',
       state.players[socket.id].name +
-        'heeft ' +
+        ' heeft ' +
         money.cardCount(data.offer) +
-        'kaarten op tafel gelegd.',
+        ' kaarten op tafel gelegd.',
     );
     emitStateUpdate(['players', 'mode']);
   });
@@ -174,7 +174,7 @@ io.on('connection', function (socket) {
       var winner = (offer > counterOffer) !== handelObject.rat ?
         handelObject.challengerId :
         socket.id;
-      io.sockets.emit('message', state.players[winner].name + 'heeft gewonnen!');
+      io.sockets.emit('message', state.players[winner].name + ' heeft gewonnen!');
       money.subtractMoney(state.players[socket.id].money, data);
       money.addMoney(state.players[handelObject.challengerId].money, data);
       money.addMoney(state.players[socket.id].money, handelObject.offer);
