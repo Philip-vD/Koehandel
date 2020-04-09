@@ -196,6 +196,12 @@ function handleBetaal(){
   betaalMenu.style.display = "none";
 }
 
+function sluitStartKoehandelScherm(){
+  startKoehandel.scherm.style.display = "none";
+  resetVirtueelBod();
+  virtueelBedrag = localState.players[socket.id].money;
+}
+
 // Disable alle geldknoppen
 function updateGeldKnoppen(){
   for(let i = 0; i < plus1Knoppen.length; i++)

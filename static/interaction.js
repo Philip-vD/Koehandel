@@ -23,9 +23,6 @@ function veranderBetaalde(){
 function openStartKoehandelScherm(){
   startKoehandel.scherm.style.display = "block";
 }
-function sluitStartKoehandelScherm(){
-  startKoehandel.scherm.style.display = "none";
-}
 function veranderUitgedaagde(){
   startKoehandel.tekst.innerText = "Je gaat # inleggen en daagt " + startKoehandel.uitgedaagde.value + " uit.";
 }
@@ -116,7 +113,6 @@ function registerEvents(){
 
   // Open of sluit startKoehandelScherm
   actieKnoppen.Koehandel.addEventListener('click', openStartKoehandelScherm, false);
-  startKoehandel.annuleer.addEventListener('click', sluitStartKoehandelScherm, false);
   startKoehandel.uitgedaagde.addEventListener('change', veranderUitgedaagde, false);
 }
 
