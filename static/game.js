@@ -197,6 +197,9 @@ function handleStartKoehandel() {
 function handleSubmitRatHandel() {
   socket.emit('submitRatHandel', virtueelBod);
   resetVirtueelBod();
+  disableMin1Knoppen();
+  resetGeldBedragen();
+  updateGeldKnoppen();
 }
 
 function handleAcceptRatHandel() {
@@ -214,6 +217,13 @@ function handleAcceptKoehandel() {
   resetVirtueelBod();
 }
 
+function sluitBetaal(){
+  resetVirtueelBod();
+  betaalMenu.style.display = "none";
+  resetGeldBedragen();
+  disableMin1Knoppen();
+}
+
 function handleBetaal(){
   var recipient = betaaldeSelect.value;
   socket.emit('giveMoney', {money: virtueelBod, recipient })
@@ -225,6 +235,30 @@ function sluitStartKoehandelScherm(){
   startKoehandel.scherm.style.display = "none";
   resetVirtueelBod();
   virtueelBedrag = localState.players[socket.id].money;
+  resetGeldBedragen();
+  disableMin1Knoppen();
+}
+
+// Disable alle min1 knoppen 
+function disableMin1Knoppen(){
+  for(var knop of min1Knoppen){
+    if(!knop.disabled){
+      knop.disabled = true;
+    }
+  }
+}
+
+// Reset de geldbedragen
+function resetGeldBedragen(){
+  let geldTabellen = document.getElementsByClassName("geldTabel");
+  for(var tabel of geldTabellen){
+    for(let i = 0; i<tabel.children.length; i++)
+    {
+      if((i%3) === 1){
+        tabel.children[i].innerText = "0";
+      }
+    }
+  }
 }
 
 // Disable alle geldknoppen
@@ -534,6 +568,7 @@ socket.on('updateMode', function(state){
         disableButtons();
         break;
       case 'rathandel':
+        updateGeldKnoppen();
         spelModus.getElementsByTagName('p')[0].innerText = "Rathandel";
         rathandelScherm.style.display = "block";
         disableButtons();

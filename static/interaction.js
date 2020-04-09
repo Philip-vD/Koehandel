@@ -10,9 +10,7 @@ let veranderNaamKnop;
 function openBetaalMenu(){
   betaalScherm.style.display = "block";
 }
-function sluitBetaalMenu(){
-  betaalScherm.style.display = "none";
-}
+
 
 // Toon naam verander menu
 function openNaamMenu(){
@@ -86,8 +84,7 @@ function initializeVariables(){
 function registerEvents(){
   // Open of sluit betaalmenu
   actieKnoppen.Betaling.addEventListener('click', openBetaalMenu, false);
-  betaalKnoppen.annuleer.addEventListener('click', sluitBetaalMenu, false);
-
+  
   // Verander naam
   veranderNaamKnop.addEventListener('click', openNaamMenu, false);
   naamSubmit.addEventListener('click', sluitNaamMenu,false);
