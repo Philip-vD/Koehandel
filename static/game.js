@@ -170,7 +170,7 @@ function handleStartKoehandel() {
 }
 
 function handleSubmitRatHandel() {
-  socket.emit('submitRatHandel', { offer: virtueelBod });
+  socket.emit('submitRatHandel', virtueelBod);
   resetVirtueelBod();
 }
 
