@@ -180,7 +180,7 @@ function handleAcceptRatHandel() {
 }
 
 function handleCounterKoehandel() {
-  socket.emit('counterKoehandel', { offer: virtueelBod });
+  socket.emit('counterKoehandel', virtueelBod);
   resetVirtueelBod();
 }
 

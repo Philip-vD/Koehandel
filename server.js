@@ -156,8 +156,9 @@ io.on('connection', function (socket) {
   socket.on('counterKoehandel', function (data) {
     var offer = money.calculateTotal(handelObject.offer);
     var counterOffer = money.calculateTotal(data);
+    console.log('Bod: ' + offer + ' Tegenbod: ' + counterOffer);
     if(offer === counterOffer) {
-      if (gelijkSpellen) {
+      if (gelijkSpellen === 0) {
         io.sockets.emit('message', 'Gelijkspel! Voer koehandel nog éénmaal uit.');
         gelijkSpellen++;
       }
@@ -166,8 +167,10 @@ io.on('connection', function (socket) {
         gelijkSpellen = 0;
       }
       state.mode = 'geen';
+      console.log('Offer: ');
+      console.log(handelObject.offer);
+      money.addMoney(state.players[handelObject.challengerId].money, handelObject.offer);
       handelObject = null;
-      money.addMoney(state.players[handelObject.challengerId], handelObject.offer);
       emitStateUpdate(['mode', 'players']);
     }
     else {
