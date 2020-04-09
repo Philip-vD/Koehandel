@@ -223,7 +223,7 @@ io.on('connection', function (socket) {
   socket.on('submitRatHandel', function(data) {
     money.subtractMoney(state.players[socket.id].money, data);
     money.addMoney(ratMoney, data);
-    io.sockets.emit('message', 'Er zitten momenteel ' + money.cardCount(ratMoney) + ' in de ratpot.');  
+    io.sockets.emit('message', 'Er zitten momenteel ' + money.cardCount(ratMoney) + ' kaarten in de ratpot.');  
     emitStateUpdate(['players']);
   });
 

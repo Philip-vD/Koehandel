@@ -127,9 +127,11 @@ button:hover{
   position: absolute;
   left: 25%;
   width: 50%;
-  height: 20%;
-  top: 35%;
+  height: 40%;
+  top: 25%;
   text-align: center;
+  background-color:  rgb(187, 128, 0);
+  z-index: 2;
 }
 
 #betaalScherm,

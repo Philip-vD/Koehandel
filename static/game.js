@@ -445,13 +445,14 @@ socket.on('message', function (data) {
 
 function displayMessage(message) {
   var infoBox = document.getElementById('actueleSpelInformatie');
-  infoBox.innerHTML = message;
+  var infoBoxP = document.getElementById('actueleSpelInformatie').getElementsByTagName('p')[0];
+  infoBoxP.innerText = message;
+  infoBox.style.display = "block";
 }
 
 function dismissMessage() {
   var infoBox = document.getElementById('actueleSpelInformatie');
-  infoBox.style.backgroundColor = 'transparent';
-  infoBox.innerHTML = null;
+  infoBox.style.display = "none";
 }
 
 function claimStamboekDier() {
