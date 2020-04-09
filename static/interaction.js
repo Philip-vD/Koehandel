@@ -2,8 +2,6 @@
 let actieKnoppen = {};
 let betaalKnoppen = {};
 let betaalScherm;
-let betaalSchermTekst;
-let betaalSchermBetaalde;
 let startKoehandel = {};
 let veranderNaamScherm;
 let veranderNaamKnop;
@@ -14,17 +12,6 @@ function openBetaalMenu(){
 }
 function sluitBetaalMenu(){
   betaalScherm.style.display = "none";
-}
-function veranderBetaalde(){
-  betaalSchermTekst.innerText = "Je gaat # betalen aan " + betaalSchermBetaalde.value;
-}
-
-// Functies voor startKoehandelScherm
-function openStartKoehandelScherm(){
-  startKoehandel.scherm.style.display = "block";
-}
-function veranderUitgedaagde(){
-  startKoehandel.tekst.innerText = "Je gaat # inleggen en daagt " + startKoehandel.uitgedaagde.value + " uit.";
 }
 
 // Toon naam verander menu
@@ -82,7 +69,6 @@ function initializeVariables(){
   betaalKnoppen.annuleer = document.getElementById('annuleerBetaling');
   betaalKnoppen.betaal = document.getElementById('betaalButton');
   betaalScherm = document.getElementById("betaalScherm");
-  betaalSchermTekst = document.getElementById("betaalInfo");
   betaalSchermBetaalde = document.getElementById("betaalde");
 
   // Initialize naam verandering scherm
@@ -94,8 +80,6 @@ function initializeVariables(){
   startKoehandel.annuleer = document.getElementById("annuleerKoehandel");
   startKoehandel.daagUit = document.getElementById("startKoehandelButton");
   startKoehandel.scherm = document.getElementById("startKoehandelScherm");
-  startKoehandel.uitgedaagde = document.getElementById("uitgedaagde");
-  startKoehandel.tekst = document.getElementById("koeHandelInzet");
 }
 
 // Add eventlisteners to variables
@@ -104,16 +88,10 @@ function registerEvents(){
   actieKnoppen.Betaling.addEventListener('click', openBetaalMenu, false);
   betaalKnoppen.annuleer.addEventListener('click', sluitBetaalMenu, false);
 
-  // Update betaalde
-  betaalSchermBetaalde.addEventListener('change', veranderBetaalde, false);
-
   // Verander naam
   veranderNaamKnop.addEventListener('click', openNaamMenu, false);
   naamSubmit.addEventListener('click', sluitNaamMenu,false);
 
-  // Open of sluit startKoehandelScherm
-  actieKnoppen.Koehandel.addEventListener('click', openStartKoehandelScherm, false);
-  startKoehandel.uitgedaagde.addEventListener('change', veranderUitgedaagde, false);
 }
 
 

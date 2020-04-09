@@ -32,7 +32,7 @@ var state = {
 };
 
 var handelObject;
-var ratMoney = emptyHand();
+var ratMoney = emptyRatMoney();
 var gelijkSpellen = 0;
 
 //const
@@ -214,7 +214,7 @@ io.on('connection', function (socket) {
 
   socket.on('startRatHandel', function() {
     state.mode = 'rathandel';
-    ratMoney = emptyHand();
+    ratMoney = emptyRatMoney();
     io.sockets.emit('message', 'Rathandel is gestart. Er zitten momenteel 0 kaarten in de ratpot.');
     emitStateUpdate(['mode']);
   });

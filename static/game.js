@@ -58,6 +58,8 @@ let mijnNaam = document.getElementById('myName');
 let opponentContainer = document.getElementById('opponentContainer');
 let betaaldeSelect = document.getElementById('betaalde');
 let uitgedaagdeSelect = document.getElementById('uitgedaagde');
+betaaldeSelect.addEventListener('change', updateBetaalTekst, false);
+uitgedaagdeSelect.addEventListener('change', updateKoehandelTekst, false);
 
 // Initialize spelmodus 
 let spelMode = document.getElementById("spelModus").getElementsByTagName('p')[0];
@@ -104,6 +106,8 @@ actieKnoppen2.Stamboek.addEventListener('click', startStamboekHandel, false);
 let betaalMenu = document.getElementById("betaalScherm");
 actieKnoppen2.Betaling = knoppenActie[3];
 actieKnoppen2.Betaling.addEventListener('click', updateGeldKnoppen, false);
+actieKnoppen2.Betaling.addEventListener('click', updateBetaalTekst, false);
+let betaalSchermTekst = document.getElementById("betaalInfo");
 
 // Initialize alle knoppen die disabled worden tijdens handel
 let disableKnoppen = document.getElementsByClassName('disableKnoppen');
@@ -113,6 +117,27 @@ let ratPlus = document.getElementById("ratPlus1");
 let ezelPlus = document.getElementById('ezelPlus1');
 ratPlus.addEventListener('click', addRat, false);
 ezelPlus.addEventListener('click', addEzel, false);
+
+// Initialize start koehandel scherm
+var startKoehandelScherm = document.getElementById("startKoehandelScherm");
+var startKoehandelTekst = document.getElementById('koeHandelInzet');
+
+
+// Open koehandel scherm
+function openKoehandelScherm(){
+  startKoehandelScherm.style.display = "block";
+  updateKoehandelTekst();
+}
+
+function updateKoehandelTekst(){
+  startKoehandelTekst.innerText = "Je gaat " + calculateTotal(virtueelBod) + " inleggen en daagt uit: " + uitgedaagde.options[uitgedaagdeSelect.selectedIndex].innerText;
+}
+
+
+// Update de betaaltekst
+function updateBetaalTekst(){
+  betaalSchermTekst.innerText = "Je gaat " + calculateTotal(virtueelBod) + " betalen aan " + betaaldeSelect.options[betaaldeSelect.selectedIndex].innerText;
+}
 
 // Remove counter knoppen 
 function removeCounters(isLeader){
@@ -161,7 +186,7 @@ function doeTegenBod(){
   uitgedaagdeKoehandelScherm.style.display = "none";
 }
 
-var startKoehandelScherm = document.getElementById("startKoehandelScherm");
+
 function handleStartKoehandel() {
   var challengedId = uitgedaagdeSelect.value;
   socket.emit('startKoehandel', { challengedId, offer: virtueelBod });
@@ -334,6 +359,8 @@ function verlaagBedrag(e){
       bedragString.innerText = virtueelBod["500"];
       break;
   }
+  updateBetaalTekst();
+  updateKoehandelTekst();
 }
 
 function verhoogBedrag(e){
@@ -406,6 +433,8 @@ function verhoogBedrag(e){
       bedragString.innerText = virtueelBod["500"];
       break;
   }
+  updateBetaalTekst();
+  updateKoehandelTekst();
 }
 
 // Log the messages from the server
